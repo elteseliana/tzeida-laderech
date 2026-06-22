@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>צידה לדרך — Provision for the Journey</title>
+<meta name="description" content="צידה לדרך — אפליקציית הנצחה המחברת בין משפחות חללי צה״ל לבני נוער מתנדבים שמתעדים את סיפוריהם ברחבי הארץ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand-light:#E8D5B0;
+    --sand-deep:#C4A882;
+    --teal:#2B6B8A;
+    --teal-deep:#1A4A6B;
+    --cream:#EFE4CD;
+    --ink:#243b46;
+    --whatsapp:#25D366;
+    --maxw:1180px;
+    --r:20px;
+    --shadow:0 30px 60px -30px rgba(26,74,107,.28);
+    --shadow-sm:0 16px 40px -22px rgba(26,74,107,.20);
+    --soft-teal:#4d88a4;
+    --soft-teal-d:#2f6d8b;
+    --nav-h:66px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Heebo','Assistant',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(60% 50% at 12% 8%, rgba(196,168,130,.18), transparent 60%),
+      radial-gradient(55% 45% at 88% 92%, rgba(43,107,138,.10), transparent 60%),
+      var(--cream);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* paper grain overlay — painterly texture over everything */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opacity:.14;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:300px 300px;
+  }
+  /* coarse fibre layer — adds the watercolor-paper tooth */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:69;pointer-events:none;opacity:.06;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.16' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+  h1,h2,h3,.heb{font-family:'Assistant','Heebo',sans-serif}
+  a{color:inherit;text-decoration:none}
+  section{position:relative}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+  /* ===== Language toggle visibility ===== */
+  .t-en{display:none}
+  body.mode-en .t-he{display:none}
+  body.mode-en .t-en{display:revert}
+
+  /* ===== Scroll reveal ===== */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}.d4{transition-delay:.48s}
+
+  /* =================================================================
+     INTRO — cinematic opening scene
+  ================================================================= */
+  .intro{
+    position:fixed;inset:0;z-index:9999;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;color:var(--ink);overflow:hidden;
+    background:
+      radial-gradient(45% 40% at 22% 22%, rgba(232,213,176,.70), transparent 65%),
+      radial-gradient(45% 45% at 80% 28%, rgba(127,180,201,.42), transparent 65%),
+      radial-gradient(55% 50% at 72% 86%, rgba(196,168,130,.55), transparent 65%),
+      radial-gradient(40% 40% at 16% 82%, rgba(43,107,138,.14), transparent 65%),
+      linear-gradient(160deg,#FBF7F1,#F3E7D2);
+    transition:opacity 1s ease, visibility 1s ease;
+  }
+  .intro.gone{opacity:0;visibility:hidden;pointer-events:none}
+  .intro::after{ /* soft glow */
+    content:"";position:absolute;inset:-30%;pointer-events:none;
+    background:radial-gradient(closest-side, rgba(255,255,255,.55), transparent 70%);
+    animation:introGlow 4.5s ease-in-out forwards;
+  }
+  @keyframes introGlow{0%{transform:scale(.4);opacity:0}45%{opacity:.9}100%{transform:scale(1.7);opacity:0}}
+  .intro-l{position:relative;z-index:2;opacity:0}
+  .intro-1{font-family:'Assistant';font-weight:600;letter-spacing:.34em;font-size:.95rem;color:var(--teal);
+    animation:introUp .9s .2s forwards}
+  .intro-2{margin:10px 0;animation:introUp 1.1s .9s forwards}
+  .intro-2 .ptitle{max-width:min(86vw,540px);filter:drop-shadow(0 12px 26px rgba(26,74,107,.16))}
+  .intro-3{font-family:'Heebo';font-weight:500;font-size:clamp(.95rem,3vw,1.3rem);color:#5d6b72;
+    animation:introUp 1s 1.7s forwards}
+  .intro-line{width:0;height:3px;border-radius:3px;margin:24px auto 0;
+    background:linear-gradient(90deg,var(--sand-deep),var(--teal),var(--sand-deep));
+    animation:introBar 1.2s 2s forwards}
+  @keyframes introUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes introBar{to{width:200px;opacity:1}}
+  .intro-continue{position:absolute;bottom:46px;left:50%;
+    font-family:'Assistant';font-weight:700;font-size:1.02rem;color:#fff;background:var(--teal-deep);
+    border:none;padding:13px 36px;border-radius:999px;cursor:pointer;z-index:3;opacity:0;
+    box-shadow:0 16px 34px -14px rgba(26,74,107,.55);
+    animation:introBtn 1s 2.5s forwards, introPulse 2.6s 3.6s ease-in-out infinite;
+    transition:background .2s}
+  .intro-continue:hover{background:var(--teal)}
+  @keyframes introBtn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%)}}
+  @keyframes introPulse{0%,100%{box-shadow:0 16px 34px -14px rgba(26,74,107,.55)}50%{box-shadow:0 18px 46px -10px rgba(43,107,138,.7)}}
+
+  /* =================================================================
+     NAV
+  ================================================================= */
+  .nav{
+    position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:900;
+    display:flex;align-items:center;
+    background:rgba(250,246,240,.72);backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(196,168,130,.35);
+    transform:translateY(-100%);transition:transform .6s cubic-bezier(.2,.7,.2,1),background .3s;
+  }
+  body.ready .nav{transform:none}
+  .nav.scrolled{background:rgba(250,246,240,.92);box-shadow:0 6px 24px -16px rgba(26,74,107,.5)}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 22px;width:100%;
+    display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Assistant';font-weight:800;font-size:1.25rem;color:var(--teal-deep)}
+  .brand .mark{width:30px;height:30px;border-radius:50%;flex:none;
+    background:conic-gradient(from 200deg,var(--teal),var(--sand-deep),var(--teal));
+    box-shadow:0 4px 12px -4px rgba(43,107,138,.6)}
+  .nav-links{display:flex;gap:6px;align-items:center}
+  .nav-links a{font-family:'Assistant';font-weight:600;font-size:.95rem;color:var(--ink);
+    padding:8px 14px;border-radius:999px;transition:background .2s,color .2s}
+  .nav-links a:hover{background:rgba(43,107,138,.1);color:var(--teal-deep)}
+  .lang-toggle{font-family:'Assistant';font-weight:700;font-size:.92rem;cursor:pointer;
+    background:var(--teal-deep);color:#fff;border:none;padding:9px 18px;border-radius:999px;
+    display:flex;align-items:center;gap:7px;transition:transform .2s,background .2s}
+  .lang-toggle:hover{transform:translateY(-2px);background:var(--teal)}
+  .lang-toggle svg{width:15px;height:15px}
+  @media(max-width:780px){ .nav-links{display:none} }
+
+  /* =================================================================
+     HERO — face-filled map + title (flyer centerpiece)
+  ================================================================= */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;padding:calc(var(--nav-h) + 30px) 20px 120px;
+    background:
+      radial-gradient(60% 50% at 15% 10%, rgba(232,213,176,.28), transparent 62%),
+      var(--cream);
+  }
+  .hero-wash{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.8s ease;
+    background:
+      radial-gradient(45% 38% at 20% 18%, rgba(232,213,176,.55), transparent 65%),
+      radial-gradient(40% 35% at 82% 26%, rgba(127,180,201,.42), transparent 65%),
+      radial-gradient(50% 45% at 70% 88%, rgba(196,168,130,.48), transparent 65%),
+      radial-gradient(45% 40% at 12% 80%, rgba(43,107,138,.16), transparent 65%);
+    background-size:200% 200%,220% 220%,210% 210%,230% 230%;
+    animation:heroFlow 30s ease-in-out infinite}
+  body.ready .hero-wash{opacity:1}
+  /* animated brush strokes — paint themselves in, then settle */
+  .hero-strokes{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;
+    animation:strokeBreathe 16s ease-in-out infinite}
+  .hero-strokes path{fill:none;stroke-linecap:round;filter:url(#brush);stroke-dasharray:1;stroke-dashoffset:1}
+  body.ready .hero-strokes path{animation:paintIn 2.4s var(--pd,0s) ease forwards}
+  @keyframes paintIn{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+  @keyframes strokeBreathe{0%,100%{opacity:.82}50%{opacity:1}}
+  @keyframes heroFlow{0%,100%{background-position:0% 0%}50%{background-position:12% 10%}}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(55% 40% at 18% 12%, rgba(43,107,138,.16), transparent 60%),
+      radial-gradient(55% 45% at 85% 85%, rgba(196,168,130,.5), transparent 60%)}
+  .hero-stage{position:relative;z-index:2;width:100%;max-width:1060px;
+    display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:20px}
+  /* Title block */
+  .hero-title{text-align:center}
+  .hero-kicker{display:inline-block;font-family:'Assistant';font-weight:600;letter-spacing:.2em;
+    color:var(--teal);background:rgba(255,255,255,.6);border:1px solid rgba(43,107,138,.25);
+    padding:8px 20px;border-radius:999px;font-size:.8rem;margin-bottom:22px}
+  .hero h1{font-family:'Assistant';font-weight:800;font-size:clamp(3.6rem,11vw,7.6rem);line-height:.92;
+    color:var(--teal-deep);text-shadow:0 2px 0 rgba(255,255,255,.55);letter-spacing:-.01em}
+  .hero .sub-en{font-family:'Heebo';font-weight:700;font-size:clamp(1rem,2.6vw,1.45rem);
+    color:var(--teal);margin-top:16px;direction:ltr}
+  .hero .mission{font-family:'Assistant';font-weight:600;font-size:clamp(1.05rem,2.6vw,1.35rem);
+    color:var(--ink);margin:22px auto 0;max-width:430px}
+  .cta-row{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:'Assistant';font-weight:700;font-size:1.02rem;
+    padding:14px 30px;border-radius:999px;border:none;cursor:pointer;
+    transition:transform .25s ease,box-shadow .25s ease,background .25s ease}
+  .btn-primary{background:var(--teal-deep);color:#fff;box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{transform:translateY(-3px);background:var(--teal)}
+  .btn-ghost{background:rgba(255,255,255,.7);color:var(--teal-deep);border:1.5px solid var(--teal)}
+  .btn-ghost:hover{transform:translateY(-3px);background:#fff}
+
+  /* Map of faces */
+  .hero-map{position:relative;width:100%;max-width:430px;margin:0 auto;aspect-ratio:.5/1;will-change:transform}
+  .israel-shape{width:100%;height:auto;display:block;filter:drop-shadow(0 20px 40px rgba(26,74,107,.15))}
+  .il-edge{stroke-opacity:.5}
+  .il-edgedark{filter:blur(4px)}
+  .face{position:absolute;transform:translate(-50%,-50%);opacity:0;transition:opacity .7s ease;z-index:3}
+  .face.lit{opacity:1}
+  .bob{animation:float var(--d,6s) ease-in-out infinite;animation-delay:var(--bd,0s)}
+  .disc{width:var(--s);height:var(--s);border-radius:50%;border:3px solid rgba(255,255,255,.82);overflow:hidden;
+    box-shadow:0 8px 22px rgba(26,74,107,.20);transform:scale(.25);
+    transition:transform .7s cubic-bezier(.2,1.5,.4,1);cursor:default;
+    display:flex;align-items:center;justify-content:center;font-size:1.05rem;color:#fff;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.45), transparent 55%), linear-gradient(140deg,#5b97b3,#cdb088)}
+  .face.lit .disc{transform:scale(1)}
+  .disc:hover{transform:scale(1.12)}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  .scroll-cue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;
+    display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--teal);
+    font-family:'Assistant';font-size:.78rem;font-weight:600;opacity:.8;animation:cueBob 2s ease-in-out infinite}
+  @keyframes cueBob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ----- painted title + text column ----- */
+  .ptitle{width:100%;height:auto;display:block}
+  .hero-ptitle{width:min(100%,440px);margin-block:2px 6px;margin-inline-start:0;margin-inline-end:auto;
+    filter:drop-shadow(0 10px 22px rgba(26,74,107,.16))}
+  .hero-title{text-align:start}
+  .hero-title .hero-kicker{margin-bottom:16px}
+  .hero .sub-en{margin-top:8px;direction:ltr;text-align:start}
+  .hero .mission{margin:18px 0 0;max-width:460px}
+  .hero-bullets{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:13px}
+  .hero-bullets li{display:flex;align-items:center;gap:12px;font-family:'Assistant';font-weight:600;font-size:1.06rem;color:var(--ink)}
+  .hero-bullets .bdot{width:13px;height:13px;border-radius:50%;flex:none;
+    background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.55), transparent 50%), linear-gradient(140deg,var(--teal),var(--sand-deep));
+    box-shadow:0 3px 9px rgba(26,74,107,.28)}
+  .scroll-prompt{margin-top:28px;font-family:'Assistant';font-weight:700;color:var(--teal-deep);
+    display:flex;align-items:center;gap:9px;font-size:1.02rem}
+  .scroll-prompt .sp-arrow{display:inline-block;font-size:1.2rem;animation:cueBob2 1.8s ease-in-out infinite}
+  @keyframes cueBob2{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ----- faces: sprout in a mix of styles ----- */
+  .sprout-grow.lit  .disc{animation:spGrow .7s cubic-bezier(.2,1.6,.4,1) forwards}
+  .sprout-bloom.lit .disc{animation:spBloom .95s ease forwards}
+  .sprout-rise.lit  .disc{animation:spRise .75s cubic-bezier(.2,1.25,.4,1) forwards}
+  @keyframes spGrow{from{transform:scale(.12)}to{transform:scale(1)}}
+  @keyframes spBloom{0%{transform:scale(.5);opacity:0;filter:blur(6px)}100%{transform:scale(1);opacity:1;filter:blur(0)}}
+  @keyframes spRise{0%{transform:translateY(18px) scale(.7);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+  .face.cycling{opacity:0 !important;transition:opacity .55s ease}
+
+  /* =================================================================
+     Section scaffolding + wave dividers
+  ================================================================= */
+  .sec{padding:110px 0;scroll-margin-top:var(--nav-h)}
+  .sec-head{text-align:center;max-width:760px;margin:0 auto 56px}
+  .sec-head h2{font-family:'Assistant';font-weight:800;font-size:clamp(2.1rem,5.5vw,3.3rem);
+    color:var(--teal-deep);line-height:1.04}
+  .sec-head .lbl{display:inline-block;font-family:'Assistant';font-weight:700;letter-spacing:.16em;
+    color:var(--teal);font-size:.82rem;margin-bottom:14px;text-transform:uppercase}
+  .sec-head p{margin-top:16px;color:#5d6b72;font-size:1.06rem}
+  .divider{width:70px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--sand-deep),var(--teal));margin:22px auto 0}
+  .wave{display:block;width:100%;height:70px;margin-bottom:-7px;position:relative;z-index:1}
+  .wave.flip{transform:rotate(180deg);margin-bottom:0;margin-top:-7px}
+  .on-teal .sec-head h2{color:#fff}.on-teal .sec-head .lbl{color:var(--sand-light)}.on-teal .sec-head p{color:#cfe0ea}
+
+  /* ===== ABOUT ===== */
+  .about{background:
+      radial-gradient(40% 35% at 12% 8%, rgba(232,213,176,.40), transparent 60%),
+      radial-gradient(38% 38% at 88% 14%, rgba(127,180,201,.22), transparent 60%),
+      radial-gradient(45% 40% at 78% 92%, rgba(196,168,130,.32), transparent 62%),
+      #FCF8F1}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .about-card{background:var(--cream);border:1px solid rgba(196,168,130,.4);border-radius:var(--r);
+    padding:38px 34px;box-shadow:var(--shadow-sm);transition:transform .3s,box-shadow .3s}
+  .about-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .about-card .ico{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+    font-size:1.6rem;margin-bottom:18px;background:linear-gradient(135deg,var(--teal),var(--teal-deep));color:#fff}
+  .about-card.warm .ico{background:linear-gradient(135deg,var(--sand-deep),var(--sand-light));color:var(--teal-deep)}
+  .about-card h3{font-size:1.5rem;color:var(--teal-deep);margin-bottom:12px;font-family:'Assistant';font-weight:800}
+  .about-card p{color:#43555e;font-size:1.05rem}
+
+  /* hand-drawn squiggle under headings */
+  .squiggle{display:block;width:220px;max-width:62%;height:16px;margin:16px auto 0}
+
+  /* warm story */
+  .about-story{max-width:720px;margin:0 auto;text-align:center}
+  .about-story p{font-family:'Assistant';font-weight:500;font-size:1.18rem;line-height:1.85;color:#3c4d56;margin-bottom:18px}
+  .about-story b{color:var(--teal-deep);font-weight:800}
+
+  /* how it works — winding journey */
+  .journey-title{text-align:center;font-family:'Assistant';font-weight:800;font-size:clamp(1.5rem,4vw,2.1rem);
+    color:var(--teal-deep);margin:66px 0 6px}
+  .journey{position:relative;max-width:760px;margin:30px auto 0}
+  .journey-line{position:absolute;top:10px;bottom:10px;left:50%;transform:translateX(-50%);width:80px;z-index:0;pointer-events:none}
+  .journey-line path{opacity:0;transition:opacity 1.3s ease}
+  .journey.in .journey-line path{opacity:.6}
+  .step{position:relative;z-index:1;display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;gap:24px;margin:26px 0}
+  .node{grid-column:2;width:72px;height:72px;border-radius:50%;margin:0 auto;
+    display:flex;align-items:center;justify-content:center;font-size:1.9rem;
+    background:radial-gradient(circle at 34% 28%, rgba(255,255,255,.6), transparent 55%), linear-gradient(140deg,#5b97b3,#cdb088);
+    border:4px solid #FCF8F1;box-shadow:0 12px 26px -10px rgba(26,74,107,.4)}
+  .step-text h4{font-family:'Assistant';font-weight:800;font-size:1.32rem;color:var(--teal-deep);margin-bottom:4px}
+  .step-text p{font-family:'Assistant';font-weight:500;font-size:1.04rem;color:#43555e;max-width:300px}
+  .step:nth-of-type(odd)  .step-text{grid-column:3;text-align:start}
+  .step:nth-of-type(even) .step-text{grid-column:1;text-align:end;justify-self:end}
+
+  .pillars{display:flex;gap:10px;flex-wrap:wrap;margin-top:56px;justify-content:center}
+  .pill{background:rgba(43,107,138,.1);color:var(--teal-deep);font-family:'Assistant';font-weight:700;
+    padding:9px 22px;border-radius:999px;font-size:1rem}
+
+  /* ===== STORIES / MAP STATS ===== */
+  .stories{color:#fff;overflow:hidden;
+    background:
+      radial-gradient(50% 45% at 18% 12%, rgba(127,180,201,.55), transparent 62%),
+      radial-gradient(45% 50% at 85% 18%, rgba(232,213,176,.30), transparent 60%),
+      radial-gradient(60% 55% at 75% 95%, rgba(20,60,90,.55), transparent 65%),
+      linear-gradient(155deg,#4d88a4,#2f6d8b)}
+  .stories::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;
+    background:
+      radial-gradient(35% 40% at 30% 70%, rgba(232,213,176,.18), transparent 60%),
+      radial-gradient(30% 35% at 65% 35%, rgba(255,255,255,.12), transparent 60%)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;max-width:820px;margin:0 auto}
+  .stat{padding:18px 14px}
+  .stat .num{font-family:'Assistant';font-weight:800;font-size:clamp(2.4rem,7vw,3.4rem);line-height:1;
+    background:linear-gradient(120deg,#fff,var(--sand-light));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .cap{margin-top:10px;font-family:'Assistant';font-weight:600;font-size:1rem;color:#dcebf2}
+  .stories-lead{text-align:center;max-width:640px;margin:46px auto 0;color:#dcebf2;font-size:1.1rem}
+
+  /* ===== FORMS ===== */
+  .forms-sec{overflow:hidden;
+    background:
+      radial-gradient(45% 40% at 18% 15%, rgba(232,213,176,.5), transparent 62%),
+      radial-gradient(40% 45% at 85% 85%, rgba(127,180,201,.28), transparent 62%),
+      linear-gradient(160deg,#FBF6EF,#F2E6CE)}
+  .forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .form-card{border-radius:var(--r);padding:38px 34px;box-shadow:var(--shadow);overflow:hidden;
+    border:1px solid rgba(255,255,255,.4);transition:transform .3s}
+  .form-card:hover{transform:translateY(-5px)}
+  .form-card.volunteer{background:linear-gradient(165deg,#2B6B8A,#1A4A6B);color:#fff}
+  .form-card.family{background:linear-gradient(165deg,#E8D5B0,#C4A882);color:var(--teal-deep)}
+  .form-card .ico{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+    font-size:1.6rem;margin-bottom:16px;background:rgba(255,255,255,.18)}
+  .form-card.family .ico{background:rgba(26,74,107,.12)}
+  .form-card h3{font-family:'Assistant';font-weight:800;font-size:1.6rem;margin-bottom:4px}
+  .form-card .h3-sub{font-family:'Heebo';font-weight:500;font-size:.95rem;opacity:.85;margin-bottom:24px}
+  .field{margin-bottom:15px}
+  .field label{display:block;font-family:'Assistant';font-weight:600;font-size:.92rem;margin-bottom:6px}
+  .field input{width:100%;padding:13px 16px;border-radius:12px;border:none;font-family:'Heebo';font-size:1rem;
+    background:rgba(255,255,255,.94);color:var(--ink);outline:2px solid transparent;transition:outline-color .2s,transform .2s}
+  .field input:focus{outline-color:rgba(255,255,255,.9);transform:translateY(-1px)}
+  .family .field input:focus{outline-color:var(--teal)}
+  .submit-btn{width:100%;padding:15px;border-radius:12px;border:none;cursor:pointer;
+    font-family:'Assistant';font-weight:700;font-size:1.08rem;margin-top:8px;transition:transform .2s,filter .2s}
+  .volunteer .submit-btn{background:#fff;color:var(--teal-deep)}
+  .family .submit-btn{background:var(--teal-deep);color:#fff}
+  .submit-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+  .wa-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .wa-btn{flex:1 1 140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--whatsapp);color:#fff;font-family:'Assistant';font-weight:700;padding:12px 14px;border-radius:12px;
+    font-size:.95rem;transition:transform .2s;box-shadow:0 6px 16px -6px rgba(37,211,102,.6)}
+  .wa-btn:hover{transform:translateY(-2px)}
+  .wa-btn svg{width:18px;height:18px;flex:none}
+  .form-note{font-size:.82rem;opacity:.8;margin-top:14px;text-align:center}
+
+  /* ===== FOUNDERS ===== */
+  .founders{color:#fff;text-align:center;overflow:hidden;
+    background:
+      radial-gradient(45% 50% at 15% 20%, rgba(127,180,201,.45), transparent 62%),
+      radial-gradient(40% 45% at 85% 80%, rgba(232,213,176,.22), transparent 60%),
+      linear-gradient(150deg,#3f7c98,#2b6480)}
+  .founder-cards{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .founder{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--r);
+    padding:32px 42px;min-width:240px;backdrop-filter:blur(6px);transition:transform .3s}
+  .founder:hover{transform:translateY(-6px)}
+  .founder .avatar{width:78px;height:78px;border-radius:50%;margin:0 auto 16px;
+    background:linear-gradient(135deg,var(--sand-light),var(--sand-deep));display:flex;align-items:center;justify-content:center;
+    font-size:1.9rem;font-weight:800;color:var(--teal-deep);font-family:'Assistant'}
+  .founder .fname{font-family:'Assistant';font-weight:800;font-size:1.5rem;margin-bottom:4px}
+  .founder .role{opacity:.78;font-size:.92rem;margin-bottom:18px}
+
+  /* ===== FOOTER ===== */
+  footer{background:#112f45;color:#cfe0ea;text-align:center;padding:56px 24px 40px}
+  footer .fmark{width:46px;height:46px;border-radius:50%;margin:0 auto 16px;
+    background:conic-gradient(from 200deg,var(--teal),var(--sand-deep),var(--teal))}
+  footer .fname{font-family:'Assistant';font-weight:800;font-size:2rem;color:#fff}
+  footer .fen{opacity:.7;margin:6px 0 24px;direction:ltr}
+  footer .fcontacts{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+  footer .fcontacts a{display:inline-flex;align-items:center;gap:8px;color:#fff;font-family:'Assistant';font-weight:600}
+  footer .copy{font-size:.82rem;opacity:.55;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;max-width:600px;margin:0 auto}
+
+  /* ===== Responsive ===== */
+  @media(max-width:880px){
+    .hero-stage{grid-template-columns:1fr;gap:34px}
+    .hero-map{max-width:300px;order:2}
+    .hero-title{order:1;text-align:center}
+    .hero-ptitle{margin-inline:auto}
+    .hero .mission,.hero .sub-en{margin-inline:auto;text-align:center}
+    .hero-bullets li,.scroll-prompt{justify-content:center}
+    .about-grid,.forms-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr;max-width:360px}
+    .journey{max-width:440px}
+    .journey-line{left:36px}
+    .step{grid-template-columns:72px 1fr;gap:16px}
+    .node{grid-column:1}
+    .step:nth-of-type(odd) .step-text,
+    .step:nth-of-type(even) .step-text{grid-column:2;text-align:start;justify-self:start}
+    .step-text p{max-width:none}
+    .sec{padding:78px 0}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001s !important;animation-iteration-count:1 !important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .face{opacity:1}.disc{transform:scale(1)}.bob{animation:none}
+    .hero{animation:none}
+    .hero-strokes path{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body class="mode-he">
+
+<!-- watercolor edge filter (referenced by the map) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wc" x="-15%" y="-15%" width="130%" height="130%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="0.4"/>
+  </filter>
+  <filter id="wcText" x="-8%" y="-22%" width="116%" height="148%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.013 0.015" numOctaves="2" seed="4" result="nt"/>
+    <feDisplacementMap in="SourceGraphic" in2="nt" scale="4.5"/>
+    <feGaussianBlur stdDeviation="0.25"/>
+  </filter>
+  <linearGradient id="ptgrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1A4A6B"/>
+    <stop offset=".42" stop-color="#2B6B8A"/>
+    <stop offset=".74" stop-color="#4d88a4"/>
+    <stop offset="1" stop-color="#C4A882"/>
+  </linearGradient>
+  <!-- soft, clean watercolor edge for the washes -->
+  <filter id="wcSoft" x="-14%" y="-14%" width="128%" height="128%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="5" result="s"/>
+    <feDisplacementMap in="SourceGraphic" in2="s" scale="6"/>
+    <feGaussianBlur stdDeviation="0.6"/>
+  </filter>
+  <!-- dry-brush: ragged edges + bristle streaks -->
+  <filter id="brush" x="-18%" y="-80%" width="136%" height="260%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.035" numOctaves="2" seed="3" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="9" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+    <feTurbulence type="turbulence" baseFrequency="0.015 0.5" numOctaves="2" seed="9" result="bristle"/>
+    <feColorMatrix in="bristle" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.85 0.22" result="bmask"/>
+    <feComposite in="disp" in2="bmask" operator="in"/>
+  </filter>
+</svg>
+
+<!-- ============ INTRO ============ -->
+<div class="intro" id="intro">
+  <div class="intro-l intro-1 heb"><span class="t-he">לזכרם · באהבה ובגאון</span><span class="t-en">In their memory · with love &amp; pride</span></div>
+  <div class="intro-l intro-2">
+    <svg class="ptitle" viewBox="0 0 560 170" role="img" aria-label="צידה לדרך">
+      <text x="280" y="122" text-anchor="middle" filter="url(#wcText)" fill="url(#ptgrad)" font-family="Assistant, sans-serif" font-weight="800" font-size="132">צידה לדרך</text>
+    </svg>
+  </div>
+  <div class="intro-l intro-3"><span class="t-he">מביאים את הנצחון הביתה</span><span class="t-en">Bringing the Victory Home</span></div>
+  <div class="intro-line"></div>
+  <button class="intro-continue" id="introSkip"><span class="t-he">המשך →</span><span class="t-en">Continue →</span></button>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="mark"></span><span>צידה לדרך</span></a>
+    <nav class="nav-links">
+      <a href="#about"><span class="t-he">אודות</span><span class="t-en">About</span></a>
+      <a href="#stories"><span class="t-he">הסיפורים</span><span class="t-en">Stories</span></a>
+      <a href="#forms"><span class="t-he">הצטרפות</span><span class="t-en">Join</span></a>
+      <a href="#founders"><span class="t-he">היוזמות</span><span class="t-en">Founders</span></a>
+    </nav>
+    <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+      <span class="t-he">English</span><span class="t-en">עברית</span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-wash"></div>
+  <svg class="hero-strokes" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path pathLength="1" style="--pd:.2s"  stroke="#BE9C6E" stroke-opacity=".42" stroke-width="48" d="M-40,150 C300,90 620,210 1240,120"/>
+    <path pathLength="1" style="--pd:.7s"  stroke="#5E93AC" stroke-opacity=".34" stroke-width="40" d="M-40,470 C260,560 700,420 1260,520"/>
+    <path pathLength="1" style="--pd:1.2s" stroke="#CDB07E" stroke-opacity=".45" stroke-width="56" d="M-40,690 C320,640 680,740 1260,660"/>
+    <path pathLength="1" style="--pd:1.7s" stroke="#4d88a4" stroke-opacity=".30" stroke-width="30" d="M-40,320 C360,360 720,260 1260,340"/>
+  </svg>
+  <div class="hero-stage">
+    <div class="hero-title reveal">
+      <span class="hero-kicker heb"><span class="t-he">הובלה · משמעות · זיכרון</span><span class="t-en">Leading · Meaning · Memory</span></span>
+      <svg class="ptitle hero-ptitle" viewBox="0 0 560 170" role="img" aria-label="צידה לדרך">
+        <text x="280" y="122" text-anchor="middle" filter="url(#wcText)" fill="url(#ptgrad)" font-family="Assistant, sans-serif" font-weight="800" font-size="132">צידה לדרך</text>
+      </svg>
+      <div class="sub-en">Provision for the Journey — Bringing the Victory Home</div>
+      <p class="mission heb">
+        <span class="t-he">״צידה לדרך״ הוא מיזם הנצחה שבו בני נוער יוצאים לדרך, פוגשים את משפחות חללי צה״ל ומתעדים את סיפוריהם — כדי שהזיכרון ימשיך לחיות.</span>
+        <span class="t-en">"Provision for the Journey" is a memorial initiative where teens travel the country, meet the families of the fallen, and preserve their stories — so memory keeps living.</span>
+      </p>
+      <ul class="hero-bullets">
+        <li><span class="bdot"></span><span class="t-he">בני נוער יוצאים לכל רחבי הארץ</span><span class="t-en">Teens travel across the whole country</span></li>
+        <li><span class="bdot"></span><span class="t-he">משפחות חולקות את סיפורי יקיריהן</span><span class="t-en">Families share their loved ones' stories</span></li>
+        <li><span class="bdot"></span><span class="t-he">הכול מתאחד לאפליקציית הנצחה חיה</span><span class="t-en">It all becomes one living memorial app</span></li>
+      </ul>
+      <div class="scroll-prompt heb"><span class="t-he">גללו מטה כדי להצטרף</span><span class="t-en">Scroll down to join</span><span class="sp-arrow">↓</span></div>
+    </div>
+
+    <div class="hero-map" id="heroMap">
+      <svg class="israel-shape" viewBox="0 0 240 460" xmlns="http://www.w3.org/2000/svg" aria-label="מפת ישראל">
+        <defs>
+          <clipPath id="ilClip"><path d="M150,10 C162,12 170,16 172,26 C176,42 176,62 173,82 C170,108 168,135 172,158 C176,178 178,192 177,205 C175,225 168,250 160,278 C152,320 144,360 138,400 C136,418 135,435 133,450 L131,452 C129,438 126,415 122,388 C116,345 104,300 92,262 C84,236 78,216 74,200 C72,192 73,186 78,182 C84,176 88,168 92,156 C98,136 100,120 104,104 C108,86 112,72 118,58 C123,46 127,38 131,30 C134,24 138,18 142,14 C145,11 147,10 150,10 Z"/></clipPath>
+        </defs>
+        <!-- layered watercolor washes, clipped to the land -->
+        <g clip-path="url(#ilClip)">
+          <g filter="url(#wcSoft)">
+            <rect x="40" y="0" width="160" height="460" fill="#E7D7B6"/>
+            <ellipse cx="150" cy="120" rx="80" ry="104" fill="#7FB0C6" fill-opacity=".42"/>
+            <ellipse cx="112" cy="150" rx="42" ry="56" fill="#CFE0E8" fill-opacity=".4"/>
+            <ellipse cx="120" cy="190" rx="66" ry="86" fill="#F0E4CB" fill-opacity=".5"/>
+            <ellipse cx="140" cy="270" rx="88" ry="120" fill="#D8BE93" fill-opacity=".55"/>
+            <ellipse cx="138" cy="372" rx="58" ry="94" fill="#5C93AC" fill-opacity=".38"/>
+          </g>
+          <!-- pigment pooling darker at the rim -->
+          <path class="il-edgedark" d="M150,10 C162,12 170,16 172,26 C176,42 176,62 173,82 C170,108 168,135 172,158 C176,178 178,192 177,205 C175,225 168,250 160,278 C152,320 144,360 138,400 C136,418 135,435 133,450 L131,452 C129,438 126,415 122,388 C116,345 104,300 92,262 C84,236 78,216 74,200 C72,192 73,186 78,182 C84,176 88,168 92,156 C98,136 100,120 104,104 C108,86 112,72 118,58 C123,46 127,38 131,30 C134,24 138,18 142,14 C145,11 147,10 150,10 Z"
+            fill="none" stroke="#9a8550" stroke-opacity=".42" stroke-width="9"/>
+          <!-- water bodies -->
+          <g filter="url(#wcSoft)">
+            <ellipse cx="164" cy="95" rx="8" ry="13" fill="#3E7E9C" fill-opacity=".82"/>   <!-- Kinneret -->
+            <ellipse cx="165" cy="216" rx="6" ry="23" fill="#356f8d" fill-opacity=".85"/>  <!-- Dead Sea -->
+          </g>
+        </g>
+        <!-- light pencil-sketch edge -->
+        <path class="il-edge" filter="url(#wcText)" fill="none" stroke="#6f6149" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"
+          d="M150,10 C162,12 170,16 172,26 C176,42 176,62 173,82 C170,108 168,135 172,158 C176,178 178,192 177,205 C175,225 168,250 160,278 C152,320 144,360 138,400 C136,418 135,435 133,450 L131,452 C129,438 126,415 122,388 C116,345 104,300 92,262 C84,236 78,216 74,200 C72,192 73,186 78,182 C84,176 88,168 92,156 C98,136 100,120 104,104 C108,86 112,72 118,58 C123,46 127,38 131,30 C134,24 138,18 142,14 C145,11 147,10 150,10 Z"/>
+      </svg>
+      <!-- floating face placeholders (dense, flyer-style) -->
+      <div class="face sprout-grow"  style="left:55%;top:7%"><div class="bob" style="--d:6s;--bd:0s"><div class="disc" style="--s:40px">🎖️</div></div></div>
+      <div class="face sprout-bloom" style="left:48%;top:12%"><div class="bob" style="--d:6.6s;--bd:.3s"><div class="disc" style="--s:30px">🌿</div></div></div>
+      <div class="face sprout-rise"  style="left:61%;top:15%"><div class="bob" style="--d:6.2s;--bd:.5s"><div class="disc" style="--s:44px">⭐</div></div></div>
+      <div class="face sprout-grow"  style="left:44%;top:19%"><div class="bob" style="--d:7s;--bd:.2s"><div class="disc" style="--s:28px">🕊️</div></div></div>
+      <div class="face sprout-bloom" style="left:57%;top:22%"><div class="bob" style="--d:6.4s;--bd:.6s"><div class="disc" style="--s:38px">🎖️</div></div></div>
+      <div class="face sprout-rise"  style="left:50%;top:26%"><div class="bob" style="--d:7.2s;--bd:.4s"><div class="disc" style="--s:33px">🌿</div></div></div>
+      <div class="face sprout-grow"  style="left:62%;top:29%"><div class="bob" style="--d:6.1s;--bd:.7s"><div class="disc" style="--s:30px">⭐</div></div></div>
+      <div class="face sprout-bloom" style="left:45%;top:31%"><div class="bob" style="--d:6.8s;--bd:.2s"><div class="disc" style="--s:40px">🕊️</div></div></div>
+      <div class="face sprout-rise"  style="left:54%;top:35%"><div class="bob" style="--d:7.1s;--bd:.5s"><div class="disc" style="--s:32px">🎖️</div></div></div>
+      <div class="face sprout-grow"  style="left:48%;top:40%"><div class="bob" style="--d:6.3s;--bd:.8s"><div class="disc" style="--s:44px">🌿</div></div></div>
+      <div class="face sprout-bloom" style="left:59%;top:42%"><div class="bob" style="--d:6.9s;--bd:.3s"><div class="disc" style="--s:28px">⭐</div></div></div>
+      <div class="face sprout-rise"  style="left:43%;top:45%"><div class="bob" style="--d:7.3s;--bd:.6s"><div class="disc" style="--s:34px">🕊️</div></div></div>
+      <div class="face sprout-grow"  style="left:53%;top:49%"><div class="bob" style="--d:6.5s;--bd:.4s"><div class="disc" style="--s:38px">🎖️</div></div></div>
+      <div class="face sprout-bloom" style="left:47%;top:53%"><div class="bob" style="--d:7s;--bd:.7s"><div class="disc" style="--s:30px">🌿</div></div></div>
+      <div class="face sprout-rise"  style="left:57%;top:57%"><div class="bob" style="--d:6.2s;--bd:.2s"><div class="disc" style="--s:40px">⭐</div></div></div>
+      <div class="face sprout-grow"  style="left:45%;top:61%"><div class="bob" style="--d:6.7s;--bd:.5s"><div class="disc" style="--s:28px">🕊️</div></div></div>
+      <div class="face sprout-bloom" style="left:52%;top:65%"><div class="bob" style="--d:7.2s;--bd:.3s"><div class="disc" style="--s:36px">🎖️</div></div></div>
+      <div class="face sprout-rise"  style="left:48%;top:70%"><div class="bob" style="--d:6.4s;--bd:.8s"><div class="disc" style="--s:32px">🌿</div></div></div>
+      <div class="face sprout-grow"  style="left:55%;top:74%"><div class="bob" style="--d:6.8s;--bd:.4s"><div class="disc" style="--s:30px">⭐</div></div></div>
+      <div class="face sprout-bloom" style="left:46%;top:79%"><div class="bob" style="--d:7.1s;--bd:.6s"><div class="disc" style="--s:34px">🕊️</div></div></div>
+      <div class="face sprout-rise"  style="left:51%;top:84%"><div class="bob" style="--d:6.3s;--bd:.2s"><div class="disc" style="--s:28px">🎖️</div></div></div>
+      <div class="face sprout-grow"  style="left:47%;top:90%"><div class="bob" style="--d:6.9s;--bd:.5s"><div class="disc" style="--s:30px">🌿</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#ffffff" d="M0,40 C360,80 720,0 1080,30 C1260,45 1380,55 1440,40 L1440,70 L0,70 Z"/></svg>
+
+<!-- ============ ABOUT ============ -->
+<section class="sec about" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="lbl"><span class="t-he">מי אנחנו</span><span class="t-en">Who We Are</span></span>
+      <h2><span class="t-he">על ״צידה לדרך״</span><span class="t-en">About "Provision for the Journey"</span></h2>
+      <svg class="squiggle" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3,9 C30,2 52,14 78,8 C104,2 128,14 154,8 C172,3 188,9 197,6" fill="none" stroke="url(#ptgrad)" stroke-width="3.5" stroke-linecap="round" filter="url(#wcText)"/></svg>
+    </div>
+
+    <!-- warm story -->
+    <div class="about-story reveal">
+      <p>
+        <span class="t-he">״צידה לדרך״ הוא מיזם הנצחה ארצי שנולד מתוך אהבה גדולה לארץ ולנופלים עליה. המיזם מאחד בני נוער מכל רחבי הארץ, שיוצאים לדרך — אל בתי המשפחות השכולות — כדי להכיר את החללים, להקשיב, ולתעד את סיפוריהם: מי שהם היו, מה אהבו, ואיך חיו.</span>
+        <span class="t-en">"Provision for the Journey" is a national memorial initiative born out of a deep love for the land and for those who fell defending it. It brings together teenagers from across Israel who set out — to the homes of bereaved families — to know the fallen, to listen, and to document their stories: who they were, what they loved, how they lived.</span>
+      </p>
+      <p>
+        <span class="t-he">כל סיפור שנאסף מצטרף לאפליקציית הנצחה <b>חיה</b>, שמחברת בין מקומות, קהילות ודורות — כדי שזכרם של הנופלים ימשיך ללוות אותנו, בכל מקום בארץ.</span>
+        <span class="t-en">Every story we gather joins a <b>living</b> memorial app that connects places, communities and generations — so the memory of the fallen keeps walking with us, everywhere in the land.</span>
+      </p>
+    </div>
+
+    <!-- how it works — a winding journey -->
+    <h3 class="journey-title reveal"><span class="t-he">איך זה עובד</span><span class="t-en">How it works</span></h3>
+    <div class="journey reveal">
+      <svg class="journey-line" viewBox="0 0 80 1000" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M40,10 C12,130 68,250 40,370 C12,490 68,610 40,730 C20,820 60,910 40,990"
+          fill="none" stroke="#9c8d70" stroke-width="9" stroke-linecap="round" stroke-dasharray="0.8 44" filter="url(#wcText)"/>
+      </svg>
+
+      <div class="step reveal d1">
+        <div class="node">🤝</div>
+        <div class="step-text">
+          <h4><span class="t-he">יוצרים קשר</span><span class="t-en">We reach out</span></h4>
+          <p><span class="t-he">בני נוער פונים אל משפחה שכולה ומזמינים אותה לשתף את סיפור יקירהּ.</span><span class="t-en">Teens reach out to a bereaved family and invite them to share their loved one's story.</span></p>
+        </div>
+      </div>
+
+      <div class="step reveal d2">
+        <div class="node">🚗</div>
+        <div class="step-text">
+          <h4><span class="t-he">יוצאים לדרך</span><span class="t-en">We hit the road</span></h4>
+          <p><span class="t-he">נוסעים אל בית המשפחה, לכל פינה בארץ — מהגליל ועד הנגב.</span><span class="t-en">They travel to the family's home, to every corner of the country — from the Galilee to the Negev.</span></p>
+        </div>
+      </div>
+
+      <div class="step reveal d3">
+        <div class="node">🎙️</div>
+        <div class="step-text">
+          <h4><span class="t-he">מתעדים את הסיפור</span><span class="t-en">We record the story</span></h4>
+          <p><span class="t-he">מקשיבים, מצלמים ומתעדים את חייו וסיפורו של החלל, באהבה ובכבוד.</span><span class="t-en">They listen, film and document the soldier's life and story, with love and respect.</span></p>
+        </div>
+      </div>
+
+      <div class="step reveal d4">
+        <div class="node">📱</div>
+        <div class="step-text">
+          <h4><span class="t-he">מצטרף לאפליקציה</span><span class="t-en">It joins the app</span></h4>
+          <p><span class="t-he">הסיפור נכנס לאפליקציית ההנצחה החיה — נגיש לכל אחד, בכל מקום ובכל זמן.</span><span class="t-en">The story enters the living memorial app — open to anyone, anywhere, anytime.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillars reveal">
+      <span class="pill"><span class="t-he">הובלה</span><span class="t-en">Leading</span></span>
+      <span class="pill"><span class="t-he">משמעות</span><span class="t-en">Meaning</span></span>
+      <span class="pill"><span class="t-he">זיכרון</span><span class="t-en">Memory</span></span>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#4d88a4" d="M0,30 C300,70 660,10 1020,36 C1230,52 1360,50 1440,34 L1440,70 L0,70 Z"/></svg>
+
+<!-- ============ STORIES ============ -->
+<section class="sec stories on-teal" id="stories">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="lbl"><span class="t-he">בכל מקום בארץ</span><span class="t-en">Everywhere in the Land</span></span>
+      <h2><span class="t-he">סיפור אחד בכל מקום</span><span class="t-en">A Story in Every Place</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="stats">
+      <div class="stat reveal d1"><div class="num" data-count="120">0</div><div class="cap"><span class="t-he">ערים וקהילות</span><span class="t-en">Cities &amp; communities</span></div></div>
+      <div class="stat reveal d2"><div class="num" data-count="300">0</div><div class="cap"><span class="t-he">סיפורים שמחכים להישמע</span><span class="t-en">Stories waiting to be told</span></div></div>
+      <div class="stat reveal d3"><div class="num" data-count="50">0</div><div class="cap"><span class="t-he">מתנדבים יוצאים לדרך</span><span class="t-en">Volunteers on the road</span></div></div>
+    </div>
+    <p class="stories-lead reveal d2">
+      <span class="t-he">מהגליל ועד הנגב — בכל עיר, מושב וקהילה יש סיפור של גבורה. כל פנים על המפה הם משפחה, זיכרון וחיים שלמים.</span>
+      <span class="t-en">From the Galilee to the Negev — in every city, village and community there is a story of heroism. Each face on the map is a family, a memory, a whole life.</span>
+    </p>
+  </div>
+</section>
+
+<svg class="wave flip" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#2f6d8b" d="M0,30 C300,70 660,10 1020,36 C1230,52 1360,50 1440,34 L1440,70 L0,70 Z"/></svg>
+
+<!-- ============ FORMS ============ -->
+<section class="sec forms-sec" id="forms">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="lbl"><span class="t-he">הצטרפו אלינו</span><span class="t-en">Join Us</span></span>
+      <h2><span class="t-he">הצטרפו אלינו לדרך</span><span class="t-en">Join Us on the Journey</span></h2>
+      <div class="divider"></div>
+      <p><span class="t-he">רוצים לקחת חלק במיזם משמעותי? מלאו את הטופס המתאים ונחזור אליכם.</span><span class="t-en">Want to be part of something meaningful? Fill in the form that fits you and we'll be in touch.</span></p>
+    </div>
+    <div class="forms-grid">
+
+      <form class="form-card volunteer reveal d1" onsubmit="return handleSubmit(event,'vol')">
+        <div class="ico">🤝</div>
+        <h3><span class="t-he">אני רוצה להתנדב</span><span class="t-en">I want to volunteer</span></h3>
+        <div class="h3-sub"><span class="t-he">בני נוער שרוצים לצאת לדרך</span><span class="t-en">For teens ready to hit the road</span></div>
+        <div class="field"><label><span class="t-he">שם מלא</span><span class="t-en">Full name</span></label><input name="name" type="text" required data-ph-he="השם שלך" data-ph-en="Your name"></div>
+        <div class="field"><label><span class="t-he">גיל</span><span class="t-en">Age</span></label><input name="age" type="number" min="12" max="25" required data-ph-he="גיל" data-ph-en="Age"></div>
+        <div class="field"><label><span class="t-he">עיר מגורים</span><span class="t-en">City</span></label><input name="city" type="text" required data-ph-he="עיר" data-ph-en="City"></div>
+        <div class="field"><label><span class="t-he">טלפון</span><span class="t-en">Phone</span></label><input name="phone" type="tel" required data-ph-he="050-000-0000" data-ph-en="050-000-0000"></div>
+        <button class="submit-btn" type="submit"><span class="t-he">שליחת הטופס</span><span class="t-en">Send</span></button>
+        <div class="wa-row">
+          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+            תמר 058-680-9301
+          </a>
+          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+            בילא 058-725-1442
+          </a>
+        </div>
+        <div class="form-note"><span class="t-he">בלחיצה על שליחה תועברו לוואטסאפ עם פרטיכם ✦</span><span class="t-en">Sending opens WhatsApp with your details ✦</span></div>
+      </form>
+
+      <form class="form-card family reveal d2" onsubmit="return handleSubmit(event,'fam')">
+        <div class="ico">🕯️</div>
+        <h3><span class="t-he">אני משפחה שרוצה לשתף</span><span class="t-en">I'm a family who wants to share</span></h3>
+        <div class="h3-sub"><span class="t-he">משפחות חללי צה״ל</span><span class="t-en">Families of the fallen</span></div>
+        <div class="field"><label><span class="t-he">שם מלא</span><span class="t-en">Full name</span></label><input name="name" type="text" required data-ph-he="השם שלך" data-ph-en="Your name"></div>
+        <div class="field"><label><span class="t-he">שם החלל ז״ל</span><span class="t-en">Fallen soldier's name</span></label><input name="soldier" type="text" required data-ph-he="שם החלל" data-ph-en="Soldier's name"></div>
+        <div class="field"><label><span class="t-he">עיר מגורים</span><span class="t-en">City</span></label><input name="city" type="text" required data-ph-he="עיר" data-ph-en="City"></div>
+        <div class="field"><label><span class="t-he">טלפון</span><span class="t-en">Phone</span></label><input name="phone" type="tel" required data-ph-he="050-000-0000" data-ph-en="050-000-0000"></div>
+        <button class="submit-btn" type="submit"><span class="t-he">שליחת הטופס</span><span class="t-en">Send</span></button>
+        <div class="wa-row">
+          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+            תמר 058-680-9301
+          </a>
+          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+            בילא 058-725-1442
+          </a>
+        </div>
+        <div class="form-note"><span class="t-he">בלחיצה על שליחה תועברו לוואטסאפ עם פרטיכם ✦</span><span class="t-en">Sending opens WhatsApp with your details ✦</span></div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#3f7c98" d="M0,40 C360,80 720,0 1080,30 C1260,45 1380,55 1440,40 L1440,70 L0,70 Z"/></svg>
+
+<!-- ============ FOUNDERS ============ -->
+<section class="sec founders" id="founders">
+  <div class="wrap reveal">
+    <div class="sec-head" style="margin-bottom:36px">
+      <span class="lbl" style="color:var(--sand-light)"><span class="t-he">מאחורי המיזם</span><span class="t-en">Behind the Initiative</span></span>
+      <h2 style="color:#fff"><span class="t-he">יוזמות הפרויקט: תמר ובילא</span><span class="t-en">Founders: Tamar &amp; Bila</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="founder-cards">
+      <div class="founder reveal d1">
+        <div class="avatar">ת</div>
+        <div class="fname"><span class="t-he">תמר</span><span class="t-en">Tamar</span></div>
+        <div class="role"><span class="t-he">יוזמת הפרויקט</span><span class="t-en">Project founder</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+          058-680-9301
+        </a>
+      </div>
+      <div class="founder reveal d2">
+        <div class="avatar">ב</div>
+        <div class="fname"><span class="t-he">בילא</span><span class="t-en">Bila</span></div>
+        <div class="role"><span class="t-he">יוזמת הפרויקט</span><span class="t-en">Project founder</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+          058-725-1442
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="fmark"></div>
+  <div class="fname heb">צידה לדרך</div>
+  <div class="fen">Provision for the Journey — Bringing the Victory Home</div>
+  <div class="fcontacts">
+    <a target="_blank" rel="noopener" href="https://wa.me/972586809301">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+      תמר · 058-680-9301
+    </a>
+    <a target="_blank" rel="noopener" href="https://wa.me/972587251442">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+      בילא · 058-725-1442
+    </a>
+  </div>
+  <div class="copy"><span class="t-he">צידה לדרך — הובלה · משמעות · זיכרון · © 2026 · נבנה באהבה לזכר חללי צה״ל</span><span class="t-en">Provision for the Journey — Leading · Meaning · Memory · © 2026 · Built with love in memory of the fallen</span></div>
+</footer>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- INTRO ---------- */
+  const intro = document.getElementById('intro');
+  function dismissIntro(){
+    if(intro.classList.contains('gone')) return;
+    intro.classList.add('gone');
+    document.body.classList.add('ready');
+    startScene();
+  }
+  document.getElementById('introSkip').addEventListener('click', dismissIntro);
+  intro.addEventListener('click', e=>{ if(e.target.id==='intro') dismissIntro(); });
+  if(reduce) setTimeout(dismissIntro, 500);   // skip the wait for reduced-motion users
+
+  /* ---------- NAV scroll state ---------- */
+  const nav = document.getElementById('nav');
+  const onScroll = ()=>{ nav.classList.toggle('scrolled', window.scrollY > 30); parallax(); };
+  window.addEventListener('scroll', ()=>requestAnimationFrame(onScroll), {passive:true});
+
+  /* ---------- Parallax on hero map ---------- */
+  const heroMap = document.getElementById('heroMap');
+  const heroTitle = document.querySelector('.hero-title');
+  function parallax(){
+    if(reduce) return;
+    const y = window.scrollY;
+    if(y < window.innerHeight){
+      if(heroMap)   heroMap.style.transform   = 'translateY(' + (y * 0.16) + 'px)';
+      if(heroTitle) heroTitle.style.transform = 'translateY(' + (y * -0.05) + 'px)';
+    }
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ---------- Map faces: sprout, float forever, gently cycle ---------- */
+  const faces = Array.from(document.querySelectorAll('.face'));
+  function litFaces(){ faces.forEach((f,i)=> setTimeout(()=> f.classList.add('lit'), reduce ? 0 : 150*i + 250)); }
+  function cycleFace(){
+    if(reduce || !faces.length) return;
+    const f = faces[Math.floor(Math.random()*faces.length)];
+    if(f.classList.contains('cycling')) return;
+    f.classList.add('cycling');                 // soft fade out
+    setTimeout(()=>{
+      f.classList.remove('lit'); f.classList.remove('cycling');
+      void f.offsetWidth;                        // reflow so the sprout replays
+      f.classList.add('lit');                    // sprout back in
+    }, 650);
+  }
+  let sceneStarted = false;
+  function startScene(){
+    if(sceneStarted) return; sceneStarted = true;
+    litFaces();
+    if(!reduce){
+      const after = faces.length*150 + 1200;
+      setTimeout(()=> setInterval(cycleFace, 2600), after);
+    }
+  }
+
+  /* ---------- Count-up stats ---------- */
+  const nums = document.querySelectorAll('.num[data-count]');
+  const numIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count;
+      if(reduce){ el.textContent = target + '+'; numIO.unobserve(el); return; }
+      let n = 0; const step = Math.max(1, Math.round(target/45));
+      const t = setInterval(()=>{ n += step; if(n>=target){ n=target; clearInterval(t);} el.textContent = n + '+'; }, 28);
+      numIO.unobserve(el);
+    });
+  },{threshold:.5});
+  nums.forEach(n=>numIO.observe(n));
+
+  /* ---------- Language toggle ---------- */
+  const html = document.documentElement;
+  function applyPlaceholders(mode){
+    document.querySelectorAll('[data-ph-he]').forEach(inp=>{
+      inp.placeholder = mode === 'en' ? inp.dataset.phEn : inp.dataset.phHe;
+    });
+  }
+  applyPlaceholders('he');
+  document.getElementById('langToggle').addEventListener('click', ()=>{
+    const toEn = !document.body.classList.contains('mode-en');
+    document.body.classList.toggle('mode-en', toEn);
+    document.body.classList.toggle('mode-he', !toEn);
+    html.lang = toEn ? 'en' : 'he';
+    html.dir  = toEn ? 'ltr' : 'rtl';
+    applyPlaceholders(toEn ? 'en' : 'he');
+  });
+
+  /* ---------- Forms → WhatsApp ---------- */
+  function handleSubmit(ev, kind){
+    ev.preventDefault();
+    const f = ev.target, get = n => { const el = f.querySelector('[name="'+n+'"]'); return el ? el.value : ''; };
+    let msg;
+    if(kind==='vol'){
+      msg = 'היי, אני רוצה להתנדב לצידה לדרך 🤝\n'
+          + 'שם: ' + get('name') + '\nגיל: ' + get('age') + '\nעיר: ' + get('city') + '\nטלפון: ' + get('phone');
+    }else{
+      msg = 'היי, אנחנו משפחה שרוצה לשתף סיפור 🕯️\n'
+          + 'שם: ' + get('name') + '\nשם החלל ז״ל: ' + get('soldier') + '\nעיר: ' + get('city') + '\nטלפון: ' + get('phone');
+    }
+    window.open('https://wa.me/972586809301?text='+encodeURIComponent(msg),'_blank');
+    return false;
+  }
+</script>
+</body>
+</html>
