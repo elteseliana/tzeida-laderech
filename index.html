@@ -71,7 +71,7 @@
      INTRO — cinematic opening scene
   ================================================================= */
   .intro{
-    position:fixed;inset:0;bottom:auto;height:100vh;height:100lvh;z-index:9999;touch-action:none;overscroll-behavior:none;
+    position:fixed;inset:0;z-index:9999;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;color:var(--ink);overflow:hidden;
     background:
@@ -80,14 +80,9 @@
       radial-gradient(55% 50% at 72% 86%, rgba(196,168,130,.55), transparent 65%),
       radial-gradient(40% 40% at 16% 82%, rgba(43,107,138,.14), transparent 65%),
       linear-gradient(160deg,#FBF7F1,#F3E7D2);
-    transition:opacity 1.2s cubic-bezier(.65,0,.35,1), transform 1.2s cubic-bezier(.65,0,.35,1), visibility 1.2s;
+    transition:opacity 1s ease, visibility 1s ease;
   }
-  .intro.gone{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-5%) scale(1.04)}
-  /* lock the page behind the opening screen */
-  html:has(body.intro-open), body.intro-open{overflow:hidden;height:100%;overscroll-behavior:none}
-  /* site eases in after the opening screen lifts */
-  .hero-stage{opacity:0;transform:translateY(22px) scale(.985);transition:opacity 1.2s .2s ease, transform 1.4s .2s cubic-bezier(.2,.7,.2,1)}
-  body.ready .hero-stage{opacity:1;transform:none}
+  .intro.gone{opacity:0;visibility:hidden;pointer-events:none}
   .intro::after{ /* soft glow */
     content:"";position:absolute;inset:-30%;pointer-events:none;
     background:radial-gradient(closest-side, rgba(255,255,255,.55), transparent 70%);
@@ -444,16 +439,6 @@
     box-shadow:0 6px 16px -6px rgba(37,211,102,.6)}
   .cc-go svg{width:18px;height:18px}
 
-  /* ===== Phones: lighter effects for smooth scrolling ===== */
-  @media (hover:none), (max-width:880px){
-    body::after, body::before{mix-blend-mode:normal;transform:translateZ(0)}
-    body::after{opacity:.07}
-    body::before{opacity:.03}
-    .nav, .nav.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(250,246,240,.97)}
-    .site-menu{backdrop-filter:none;-webkit-backdrop-filter:none}
-    .hero-map{will-change:auto}
-  }
-
   /* ===== Responsive ===== */
   @media(max-width:880px){
     .hero-stage{grid-template-columns:1fr;gap:34px}
@@ -483,7 +468,7 @@
   }
 </style>
 </head>
-<body class="mode-he intro-open">
+<body class="mode-he">
 
 <!-- watercolor edge filter (referenced by the map) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -935,30 +920,24 @@
   const intro = document.getElementById('intro');
   function dismissIntro(){
     if(intro.classList.contains('gone')) return;
-    window.scrollTo(0,0);
     intro.classList.add('gone');
-    document.body.classList.remove('intro-open');
     document.body.classList.add('ready');
     startScene();
   }
   document.getElementById('introSkip').addEventListener('click', dismissIntro);
   intro.addEventListener('click', e=>{ if(e.target.id==='intro') dismissIntro(); });
-  intro.addEventListener('touchmove', e=> e.preventDefault(), {passive:false});
-  intro.addEventListener('wheel', e=> e.preventDefault(), {passive:false});
   if(reduce) setTimeout(dismissIntro, 500);   // skip the wait for reduced-motion users
 
   /* ---------- NAV scroll state ---------- */
   const nav = document.getElementById('nav');
-  let ticking = false;
-  const onScroll = ()=>{ ticking = false; nav.classList.toggle('scrolled', window.scrollY > 30); parallax(); };
-  window.addEventListener('scroll', ()=>{ if(!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  const onScroll = ()=>{ nav.classList.toggle('scrolled', window.scrollY > 30); parallax(); };
+  window.addEventListener('scroll', ()=>requestAnimationFrame(onScroll), {passive:true});
 
   /* ---------- Parallax on hero map ---------- */
   const heroMap = document.getElementById('heroMap');
   const heroTitle = document.querySelector('.hero-title');
-  const noParallax = window.matchMedia('(hover: none), (max-width: 880px)').matches;
   function parallax(){
-    if(reduce || noParallax) return;
+    if(reduce) return;
     const y = window.scrollY;
     if(y < window.innerHeight){
       if(heroMap)   heroMap.style.transform   = 'translateY(' + (y * 0.16) + 'px)';
