@@ -284,9 +284,6 @@
   .journey-title{text-align:center;font-family:'Assistant';font-weight:800;font-size:clamp(1.5rem,4vw,2.1rem);
     color:var(--teal-deep);margin:66px 0 6px}
   .journey{position:relative;max-width:760px;margin:30px auto 0}
-  .journey-line{position:absolute;top:10px;bottom:10px;left:50%;transform:translateX(-50%);width:80px;z-index:0;pointer-events:none}
-  .journey-line path{opacity:0;transition:opacity 1.3s ease}
-  .journey.in .journey-line path{opacity:.6}
   .step{position:relative;z-index:1;display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;gap:24px;margin:26px 0}
   .node{grid-column:2;width:72px;height:72px;border-radius:50%;margin:0 auto;
     display:flex;align-items:center;justify-content:center;font-size:1.9rem;
@@ -381,6 +378,55 @@
   footer .fcontacts a{display:inline-flex;align-items:center;gap:8px;color:#fff;font-family:'Assistant';font-weight:600}
   footer .copy{font-size:.82rem;opacity:.55;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;max-width:600px;margin:0 auto}
 
+
+  /* ===== Brand menu ===== */
+  .brand-wrap{position:relative}
+  button.brand{background:none;border:none;cursor:pointer;padding:6px 4px;border-radius:12px}
+  .brand .menu-ico{width:20px;height:20px;opacity:.75;transition:transform .25s}
+  .brand[aria-expanded="true"] .menu-ico{transform:rotate(90deg)}
+  .site-menu{position:absolute;top:calc(100% + 10px);inset-inline-start:0;min-width:210px;z-index:950;
+    background:rgba(252,248,241,.98);backdrop-filter:blur(14px);border:1px solid rgba(196,168,130,.45);
+    border-radius:18px;box-shadow:0 18px 40px -18px rgba(26,74,107,.55);padding:8px;
+    display:flex;flex-direction:column;gap:2px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .2s,transform .2s,visibility .2s}
+  .site-menu.open{opacity:1;visibility:visible;transform:none}
+  .site-menu a{font-family:'Assistant';font-weight:700;font-size:1.05rem;color:var(--ink);padding:11px 16px;border-radius:12px;transition:background .2s,color .2s}
+  .site-menu a:hover{background:rgba(43,107,138,.1);color:var(--teal-deep)}
+  .site-menu a.active{background:var(--teal-deep);color:#fff}
+
+  /* ===== Pages ===== */
+  .page[hidden]{display:none}
+  .page-top{padding-top:calc(var(--nav-h) + 70px);min-height:100vh}
+  .hero .hero-sub{font-family:'Assistant';font-weight:700;font-size:clamp(1.1rem,2.7vw,1.4rem);color:var(--teal);margin-top:6px;max-width:470px}
+  .hero .mission{font-size:clamp(.98rem,2.2vw,1.1rem);font-weight:500;line-height:1.75}
+  .hero .mission b{color:var(--teal-deep);font-weight:800}
+  .hero-cta{justify-content:flex-start}
+  .btn svg{width:18px;height:18px;flex:none}
+  .disc img{width:100%;height:100%;object-fit:cover;display:block}
+  .stat .num{direction:ltr;unicode-bidi:isolate}
+  .about-story.long{text-align:start;max-width:760px}
+  .about-story.long p{font-size:1.1rem}
+  .about-quote{text-align:center;font-size:1.22rem !important;margin-top:26px}
+  .journey-title{margin-top:70px}
+  .forms-grid.single{grid-template-columns:1fr;max-width:520px;margin:60px auto 0}
+  .leaders{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;margin-top:30px}
+  .leader{background:#fff;border-radius:var(--r);padding:26px 20px;text-align:center;box-shadow:var(--shadow-sm);
+    border:1px solid rgba(196,168,130,.35);transition:transform .3s}
+  .leader:hover{transform:translateY(-5px)}
+  .leader .avatar{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--sand-light),var(--sand-deep));font-family:'Assistant';font-weight:800;font-size:1.6rem;color:var(--teal-deep)}
+  .leader .lname{font-family:'Assistant';font-weight:800;font-size:1.25rem;color:var(--teal-deep)}
+  .leader .lcity{font-size:.95rem;color:#5d6b72;margin:4px 0 16px}
+  .leader .wa-btn{width:100%}
+  .lead-cta{text-align:center;margin:60px auto 0;max-width:560px;padding:34px 24px;border-radius:var(--r);
+    background:rgba(255,255,255,.7);border:1.5px dashed var(--sand-deep)}
+  .lead-cta h3{font-family:'Assistant';font-weight:800;font-size:1.6rem;color:var(--teal-deep)}
+  .lead-cta p{color:#5d6b72;margin:6px 0 20px}
+  .family-form{max-width:760px;margin:0 auto;text-align:center}
+  .family-form iframe{width:100%;height:1500px;border:none;border-radius:var(--r);background:#fff;box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .contact-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;max-width:560px;margin:0 auto}
+  .contact-row .wa-btn{font-size:1.1rem;padding:16px 20px}
+
   /* ===== Responsive ===== */
   @media(max-width:880px){
     .hero-stage{grid-template-columns:1fr;gap:34px}
@@ -388,11 +434,11 @@
     .hero-title{order:1;text-align:center}
     .hero-ptitle{margin-inline:auto}
     .hero .mission,.hero .sub-en{margin-inline:auto;text-align:center}
-    .hero-bullets li,.scroll-prompt{justify-content:center}
+    .hero-bullets li,.scroll-prompt,.hero-cta{justify-content:center}
+    .hero .hero-sub{margin-inline:auto}
     .about-grid,.forms-grid{grid-template-columns:1fr}
     .stats{grid-template-columns:1fr;max-width:360px}
     .journey{max-width:440px}
-    .journey-line{left:36px}
     .step{grid-template-columns:72px 1fr;gap:16px}
     .node{grid-column:1}
     .step:nth-of-type(odd) .step-text,
@@ -448,13 +494,13 @@
 
 <!-- ============ INTRO ============ -->
 <div class="intro" id="intro">
-  <div class="intro-l intro-1 heb"><span class="t-he">לזכרם · באהבה ובגאון</span><span class="t-en">In their memory · with love &amp; pride</span></div>
+  <div class="intro-l intro-1 heb"><span class="t-he">הנצחה · חיבור · משמעות</span><span class="t-en">Remembrance · Connection · Meaning</span></div>
   <div class="intro-l intro-2">
     <svg class="ptitle" viewBox="0 0 560 170" role="img" aria-label="צידה לדרך">
       <text x="280" y="122" text-anchor="middle" filter="url(#wcText)" fill="url(#ptgrad)" font-family="Assistant, sans-serif" font-weight="800" font-size="132">צידה לדרך</text>
     </svg>
   </div>
-  <div class="intro-l intro-3"><span class="t-he">מביאים את הנצחון הביתה</span><span class="t-en">Bringing the Victory Home</span></div>
+  <div class="intro-l intro-3"><span class="t-he">נוסעים לאורם</span><span class="t-en">Traveling by Their Light</span></div>
   <div class="intro-line"></div>
   <button class="intro-continue" id="introSkip"><span class="t-he">המשך →</span><span class="t-en">Continue →</span></button>
 </div>
@@ -462,13 +508,19 @@
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="nav-inner">
-    <a href="#top" class="brand"><span class="mark"></span><span>צידה לדרך</span></a>
-    <nav class="nav-links">
-      <a href="#about"><span class="t-he">אודות</span><span class="t-en">About</span></a>
-      <a href="#stories"><span class="t-he">הסיפורים</span><span class="t-en">Stories</span></a>
-      <a href="#forms"><span class="t-he">הצטרפות</span><span class="t-en">Join</span></a>
-      <a href="#founders"><span class="t-he">היוזמות</span><span class="t-en">Founders</span></a>
-    </nav>
+    <div class="brand-wrap">
+      <button class="brand" id="brandBtn" aria-haspopup="true" aria-expanded="false" aria-controls="siteMenu">
+        <span class="mark"></span><span>צידה לדרך</span>
+        <svg class="menu-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="site-menu" id="siteMenu">
+        <a href="#home" data-go="home"><span class="t-he">עמוד בית</span><span class="t-en">Home</span></a>
+        <a href="#volunteers" data-go="volunteers"><span class="t-he">מתנדבים</span><span class="t-en">Volunteers</span></a>
+        <a href="#families" data-go="families"><span class="t-he">משפחות</span><span class="t-en">Families</span></a>
+        <a href="#about" data-go="about"><span class="t-he">עלינו</span><span class="t-en">About Us</span></a>
+        <a href="#contact" data-go="contact"><span class="t-he">יצירת קשר</span><span class="t-en">Contact</span></a>
+      </nav>
+    </div>
     <button class="lang-toggle" id="langToggle" aria-label="Switch language">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
       <span class="t-he">English</span><span class="t-en">עברית</span>
@@ -476,6 +528,7 @@
   </div>
 </header>
 
+<main class="page" data-page="home">
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
   <div class="hero-wash"></div>
@@ -487,22 +540,24 @@
   </svg>
   <div class="hero-stage">
     <div class="hero-title reveal">
-      <span class="hero-kicker heb"><span class="t-he">הובלה · משמעות · זיכרון</span><span class="t-en">Leading · Meaning · Memory</span></span>
+      <span class="hero-kicker heb"><span class="t-he">הנצחה · חיבור · משמעות</span><span class="t-en">Remembrance · Connection · Meaning</span></span>
       <svg class="ptitle hero-ptitle" viewBox="0 0 560 170" role="img" aria-label="צידה לדרך">
         <text x="280" y="122" text-anchor="middle" filter="url(#wcText)" fill="url(#ptgrad)" font-family="Assistant, sans-serif" font-weight="800" font-size="132">צידה לדרך</text>
       </svg>
-      <div class="sub-en">Provision for the Journey — Bringing the Victory Home</div>
+      <p class="hero-sub heb"><span class="t-he">מחברים בין הדרך, האנשים והסיפורים — זיכרון שמוביל לחיים ולעשיית טוב</span><span class="t-en">Connecting the road, the people and the stories — memory that leads to life and to doing good</span></p>
       <p class="mission heb">
-        <span class="t-he">״צידה לדרך״ הוא מיזם הנצחה שבו בני נוער יוצאים לדרך, פוגשים את משפחות חללי צה״ל ומתעדים את סיפוריהם — כדי שהזיכרון ימשיך לחיות.</span>
-        <span class="t-en">"Provision for the Journey" is a memorial initiative where teens travel the country, meet the families of the fallen, and preserve their stories — so memory keeps living.</span>
+        <span class="t-he">צידה לדרך הוא מיזם הנצחה ארצי שנולד מתוך אהבה גדולה לארץ ולנופלים עליה. המיזם מאחד בני נוער מכל רחבי הארץ, שיוצאים לדרך — אל המשפחות השכולות — כדי להכיר את החללים, להקשיב, <b>ולתעד את סיפוריהם</b>: מי היו, מה אהבו ואיך חיו.</span>
+        <span class="t-en">Provision for the Journey is a national memorial initiative born out of a deep love for the Land and for those who fell for it. It brings together teens from all over the country who set out on the road — to bereaved families — to get to know the fallen, to listen, <b>and to document their stories</b>: who they were, what they loved and how they lived.</span>
       </p>
-      <ul class="hero-bullets">
-        <li><span class="bdot"></span><span class="t-he">בני נוער יוצאים לכל רחבי הארץ</span><span class="t-en">Teens travel across the whole country</span></li>
-        <li><span class="bdot"></span><span class="t-he">משפחות חולקות את סיפורי יקיריהן</span><span class="t-en">Families share their loved ones' stories</span></li>
-        <li><span class="bdot"></span><span class="t-he">הכול מתאחד לאפליקציית הנצחה חיה</span><span class="t-en">It all becomes one living memorial app</span></li>
-      </ul>
-      <div class="scroll-prompt heb"><span class="t-he">גללו מטה כדי להצטרף</span><span class="t-en">Scroll down to join</span><span class="sp-arrow">↓</span></div>
-    </div>
+      <p class="mission heb">
+        <span class="t-he">כל סיפור שנאסף מצטרף לאפליקציית הנצחה שכל מהותה היא המשך החיים. האפליקציה מחברת בין הנוסעים ברחבי הארץ לבין הערים, היישובים, המושבים והקיבוצים שבזכות בניהם ובנותיהם אנחנו כאן. דרך הסיפורים, אנחנו מבקשים שהזיכרון שלהם לא ימוש מאיתנו, אלא ימשיך ללוות אותנו ולהדהד בחיינו — דרך השראה, עשייה ופעולה של טוב אצל כל אחד ואחת מאיתנו.</span>
+        <span class="t-en">Every story we gather joins a memorial app whose whole essence is the continuation of life. The app connects travelers across the country with the cities, towns, moshavim and kibbutzim whose sons and daughters are the reason we are here. Through the stories, we ask that their memory never leave us, but keep walking with us and echoing in our lives — through inspiration, action and acts of good in each and every one of us.</span>
+      </p>
+      <div class="cta-row hero-cta">
+        <a class="btn btn-primary" href="#volunteers" data-go="volunteers"><span class="t-he">אני רוצה להתנדב</span><span class="t-en">I want to volunteer</span></a>
+        <a class="btn btn-ghost" href="#families" data-go="families"><span class="t-he">משפחות — קביעת ראיון</span><span class="t-en">Families — book an interview</span></a>
+      </div>
+      </div>
 
     <div class="hero-map" id="heroMap">
       <svg class="israel-shape" viewBox="0 0 240 460" xmlns="http://www.w3.org/2000/svg" aria-label="מפת ישראל">
@@ -532,107 +587,68 @@
         <path class="il-edge" filter="url(#wcText)" fill="none" stroke="#6f6149" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"
           d="M150,10 C162,12 170,16 172,26 C176,42 176,62 173,82 C170,108 168,135 172,158 C176,178 178,192 177,205 C175,225 168,250 160,278 C152,320 144,360 138,400 C136,418 135,435 133,450 L131,452 C129,438 126,415 122,388 C116,345 104,300 92,262 C84,236 78,216 74,200 C72,192 73,186 78,182 C84,176 88,168 92,156 C98,136 100,120 104,104 C108,86 112,72 118,58 C123,46 127,38 131,30 C134,24 138,18 142,14 C145,11 147,10 150,10 Z"/>
       </svg>
-      <!-- floating face placeholders (dense, flyer-style) -->
-      <div class="face sprout-grow"  style="left:55%;top:7%"><div class="bob" style="--d:6s;--bd:0s"><div class="disc" style="--s:40px">🎖️</div></div></div>
-      <div class="face sprout-bloom" style="left:48%;top:12%"><div class="bob" style="--d:6.6s;--bd:.3s"><div class="disc" style="--s:30px">🌿</div></div></div>
-      <div class="face sprout-rise"  style="left:61%;top:15%"><div class="bob" style="--d:6.2s;--bd:.5s"><div class="disc" style="--s:44px">⭐</div></div></div>
-      <div class="face sprout-grow"  style="left:44%;top:19%"><div class="bob" style="--d:7s;--bd:.2s"><div class="disc" style="--s:28px">🕊️</div></div></div>
-      <div class="face sprout-bloom" style="left:57%;top:22%"><div class="bob" style="--d:6.4s;--bd:.6s"><div class="disc" style="--s:38px">🎖️</div></div></div>
-      <div class="face sprout-rise"  style="left:50%;top:26%"><div class="bob" style="--d:7.2s;--bd:.4s"><div class="disc" style="--s:33px">🌿</div></div></div>
-      <div class="face sprout-grow"  style="left:62%;top:29%"><div class="bob" style="--d:6.1s;--bd:.7s"><div class="disc" style="--s:30px">⭐</div></div></div>
-      <div class="face sprout-bloom" style="left:45%;top:31%"><div class="bob" style="--d:6.8s;--bd:.2s"><div class="disc" style="--s:40px">🕊️</div></div></div>
-      <div class="face sprout-rise"  style="left:54%;top:35%"><div class="bob" style="--d:7.1s;--bd:.5s"><div class="disc" style="--s:32px">🎖️</div></div></div>
-      <div class="face sprout-grow"  style="left:48%;top:40%"><div class="bob" style="--d:6.3s;--bd:.8s"><div class="disc" style="--s:44px">🌿</div></div></div>
-      <div class="face sprout-bloom" style="left:59%;top:42%"><div class="bob" style="--d:6.9s;--bd:.3s"><div class="disc" style="--s:28px">⭐</div></div></div>
-      <div class="face sprout-rise"  style="left:43%;top:45%"><div class="bob" style="--d:7.3s;--bd:.6s"><div class="disc" style="--s:34px">🕊️</div></div></div>
-      <div class="face sprout-grow"  style="left:53%;top:49%"><div class="bob" style="--d:6.5s;--bd:.4s"><div class="disc" style="--s:38px">🎖️</div></div></div>
-      <div class="face sprout-bloom" style="left:47%;top:53%"><div class="bob" style="--d:7s;--bd:.7s"><div class="disc" style="--s:30px">🌿</div></div></div>
-      <div class="face sprout-rise"  style="left:57%;top:57%"><div class="bob" style="--d:6.2s;--bd:.2s"><div class="disc" style="--s:40px">⭐</div></div></div>
-      <div class="face sprout-grow"  style="left:45%;top:61%"><div class="bob" style="--d:6.7s;--bd:.5s"><div class="disc" style="--s:28px">🕊️</div></div></div>
-      <div class="face sprout-bloom" style="left:52%;top:65%"><div class="bob" style="--d:7.2s;--bd:.3s"><div class="disc" style="--s:36px">🎖️</div></div></div>
-      <div class="face sprout-rise"  style="left:48%;top:70%"><div class="bob" style="--d:6.4s;--bd:.8s"><div class="disc" style="--s:32px">🌿</div></div></div>
-      <div class="face sprout-grow"  style="left:55%;top:74%"><div class="bob" style="--d:6.8s;--bd:.4s"><div class="disc" style="--s:30px">⭐</div></div></div>
-      <div class="face sprout-bloom" style="left:46%;top:79%"><div class="bob" style="--d:7.1s;--bd:.6s"><div class="disc" style="--s:34px">🕊️</div></div></div>
-      <div class="face sprout-rise"  style="left:51%;top:84%"><div class="bob" style="--d:6.3s;--bd:.2s"><div class="disc" style="--s:28px">🎖️</div></div></div>
-      <div class="face sprout-grow"  style="left:47%;top:90%"><div class="bob" style="--d:6.9s;--bd:.5s"><div class="disc" style="--s:30px">🌿</div></div></div>
+      <!-- floating faces of the fallen -->
+      <div class="face sprout-grow" style="left:60.2%;top:4.5%"><div class="bob" style="--d:6.2s;--bd:0.7s"><div class="disc" style="--s:28px"><img src="faces/f45.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:70.3%;top:8.1%"><div class="bob" style="--d:6.4s;--bd:0.6s"><div class="disc" style="--s:38px"><img src="faces/f11.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:61.8%;top:9.1%"><div class="bob" style="--d:6.6s;--bd:0.5s"><div class="disc" style="--s:32px"><img src="faces/f16.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:51.3%;top:10.1%"><div class="bob" style="--d:6.5s;--bd:0.0s"><div class="disc" style="--s:32px"><img src="faces/f52.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:64.5%;top:13.0%"><div class="bob" style="--d:6.0s;--bd:0.0s"><div class="disc" style="--s:32px"><img src="faces/f02.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:52.7%;top:14.7%"><div class="bob" style="--d:6.7s;--bd:0.2s"><div class="disc" style="--s:36px"><img src="faces/f13.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:66.7%;top:18.4%"><div class="bob" style="--d:6.3s;--bd:0.4s"><div class="disc" style="--s:34px"><img src="faces/f39.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:47.0%;top:18.5%"><div class="bob" style="--d:7.1s;--bd:0.3s"><div class="disc" style="--s:38px"><img src="faces/f42.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:63.1%;top:21.8%"><div class="bob" style="--d:6.7s;--bd:0.7s"><div class="disc" style="--s:34px"><img src="faces/f37.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:46.3%;top:22.0%"><div class="bob" style="--d:6.4s;--bd:0.2s"><div class="disc" style="--s:36px"><img src="faces/f54.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:56.2%;top:24.1%"><div class="bob" style="--d:6.4s;--bd:0.7s"><div class="disc" style="--s:30px"><img src="faces/f50.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:42.0%;top:24.7%"><div class="bob" style="--d:6.9s;--bd:0.1s"><div class="disc" style="--s:38px"><img src="faces/f41.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:63.0%;top:26.3%"><div class="bob" style="--d:7.3s;--bd:0.7s"><div class="disc" style="--s:32px"><img src="faces/f29.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:52.7%;top:27.9%"><div class="bob" style="--d:6.1s;--bd:0.6s"><div class="disc" style="--s:28px"><img src="faces/f25.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:73.2%;top:28.8%"><div class="bob" style="--d:6.6s;--bd:0.0s"><div class="disc" style="--s:32px"><img src="faces/f19.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:45.9%;top:29.2%"><div class="bob" style="--d:7.1s;--bd:0.7s"><div class="disc" style="--s:38px"><img src="faces/f36.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:66.4%;top:29.8%"><div class="bob" style="--d:7.3s;--bd:0.5s"><div class="disc" style="--s:38px"><img src="faces/f22.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:41.3%;top:31.8%"><div class="bob" style="--d:6.4s;--bd:0.4s"><div class="disc" style="--s:38px"><img src="faces/f24.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:59.5%;top:32.5%"><div class="bob" style="--d:6.3s;--bd:0.0s"><div class="disc" style="--s:30px"><img src="faces/f53.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:69.8%;top:34.8%"><div class="bob" style="--d:7.3s;--bd:0.8s"><div class="disc" style="--s:32px"><img src="faces/f20.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:38.5%;top:35.3%"><div class="bob" style="--d:6.4s;--bd:0.0s"><div class="disc" style="--s:36px"><img src="faces/f30.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:55.8%;top:36.0%"><div class="bob" style="--d:6.3s;--bd:0.1s"><div class="disc" style="--s:32px"><img src="faces/f31.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:49.1%;top:37.7%"><div class="bob" style="--d:6.5s;--bd:0.4s"><div class="disc" style="--s:32px"><img src="faces/f27.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:72.6%;top:38.5%"><div class="bob" style="--d:6.9s;--bd:0.2s"><div class="disc" style="--s:36px"><img src="faces/f38.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:36.7%;top:40.0%"><div class="bob" style="--d:6.1s;--bd:0.7s"><div class="disc" style="--s:28px"><img src="faces/f01.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:67.2%;top:40.4%"><div class="bob" style="--d:6.5s;--bd:0.0s"><div class="disc" style="--s:30px"><img src="faces/f43.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:44.8%;top:40.7%"><div class="bob" style="--d:6.4s;--bd:0.5s"><div class="disc" style="--s:28px"><img src="faces/f46.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:57.8%;top:42.0%"><div class="bob" style="--d:6.8s;--bd:0.4s"><div class="disc" style="--s:28px"><img src="faces/f14.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:52.2%;top:44.0%"><div class="bob" style="--d:6.9s;--bd:0.6s"><div class="disc" style="--s:30px"><img src="faces/f34.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:62.4%;top:44.6%"><div class="bob" style="--d:6.5s;--bd:0.3s"><div class="disc" style="--s:36px"><img src="faces/f23.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:73.3%;top:45.8%"><div class="bob" style="--d:6.2s;--bd:0.6s"><div class="disc" style="--s:34px"><img src="faces/f40.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:33.7%;top:45.9%"><div class="bob" style="--d:6.2s;--bd:0.7s"><div class="disc" style="--s:38px"><img src="faces/f04.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:57.7%;top:48.2%"><div class="bob" style="--d:7.2s;--bd:0.5s"><div class="disc" style="--s:38px"><img src="faces/f44.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:71.8%;top:49.3%"><div class="bob" style="--d:6.9s;--bd:0.4s"><div class="disc" style="--s:38px"><img src="faces/f49.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:39.1%;top:49.3%"><div class="bob" style="--d:7.0s;--bd:0.5s"><div class="disc" style="--s:36px"><img src="faces/f21.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:63.9%;top:49.7%"><div class="bob" style="--d:7.1s;--bd:0.5s"><div class="disc" style="--s:28px"><img src="faces/f32.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:47.8%;top:49.9%"><div class="bob" style="--d:6.9s;--bd:0.6s"><div class="disc" style="--s:38px"><img src="faces/f55.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:66.4%;top:53.1%"><div class="bob" style="--d:6.1s;--bd:0.0s"><div class="disc" style="--s:30px"><img src="faces/f35.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:49.6%;top:53.5%"><div class="bob" style="--d:6.5s;--bd:0.1s"><div class="disc" style="--s:38px"><img src="faces/f10.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:58.0%;top:53.8%"><div class="bob" style="--d:6.7s;--bd:0.5s"><div class="disc" style="--s:34px"><img src="faces/f26.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:67.0%;top:57.8%"><div class="bob" style="--d:6.7s;--bd:0.2s"><div class="disc" style="--s:38px"><img src="faces/f48.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:41.8%;top:59.8%"><div class="bob" style="--d:6.0s;--bd:0.6s"><div class="disc" style="--s:32px"><img src="faces/f28.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:49.7%;top:60.3%"><div class="bob" style="--d:7.2s;--bd:0.7s"><div class="disc" style="--s:38px"><img src="faces/f09.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:60.9%;top:61.2%"><div class="bob" style="--d:6.9s;--bd:0.1s"><div class="disc" style="--s:28px"><img src="faces/f47.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:48.2%;top:63.9%"><div class="bob" style="--d:6.6s;--bd:0.6s"><div class="disc" style="--s:38px"><img src="faces/f12.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:57.7%;top:64.1%"><div class="bob" style="--d:6.3s;--bd:0.6s"><div class="disc" style="--s:32px"><img src="faces/f03.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:54.2%;top:68.2%"><div class="bob" style="--d:7.0s;--bd:0.8s"><div class="disc" style="--s:30px"><img src="faces/f18.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:47.8%;top:68.8%"><div class="bob" style="--d:7.1s;--bd:0.1s"><div class="disc" style="--s:34px"><img src="faces/f17.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:62.7%;top:69.1%"><div class="bob" style="--d:6.4s;--bd:0.0s"><div class="disc" style="--s:38px"><img src="faces/f06.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:49.5%;top:73.9%"><div class="bob" style="--d:6.8s;--bd:0.1s"><div class="disc" style="--s:38px"><img src="faces/f07.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:60.9%;top:74.1%"><div class="bob" style="--d:6.4s;--bd:0.5s"><div class="disc" style="--s:30px"><img src="faces/f15.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:54.6%;top:76.0%"><div class="bob" style="--d:6.4s;--bd:0.5s"><div class="disc" style="--s:38px"><img src="faces/f51.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-bloom" style="left:58.2%;top:78.9%"><div class="bob" style="--d:6.6s;--bd:0.4s"><div class="disc" style="--s:28px"><img src="faces/f08.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-rise" style="left:54.0%;top:81.4%"><div class="bob" style="--d:6.1s;--bd:0.2s"><div class="disc" style="--s:38px"><img src="faces/f05.jpg" alt="" loading="lazy"></div></div></div>
+      <div class="face sprout-grow" style="left:54.7%;top:84.9%"><div class="bob" style="--d:6.4s;--bd:0.4s"><div class="disc" style="--s:34px"><img src="faces/f33.jpg" alt="" loading="lazy"></div></div></div>
     </div>
   </div>
 </section>
 
 <!-- wave -->
-<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#ffffff" d="M0,40 C360,80 720,0 1080,30 C1260,45 1380,55 1440,40 L1440,70 L0,70 Z"/></svg>
-
-<!-- ============ ABOUT ============ -->
-<section class="sec about" id="about">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="lbl"><span class="t-he">מי אנחנו</span><span class="t-en">Who We Are</span></span>
-      <h2><span class="t-he">על ״צידה לדרך״</span><span class="t-en">About "Provision for the Journey"</span></h2>
-      <svg class="squiggle" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3,9 C30,2 52,14 78,8 C104,2 128,14 154,8 C172,3 188,9 197,6" fill="none" stroke="url(#ptgrad)" stroke-width="3.5" stroke-linecap="round" filter="url(#wcText)"/></svg>
-    </div>
-
-    <!-- warm story -->
-    <div class="about-story reveal">
-      <p>
-        <span class="t-he">״צידה לדרך״ הוא מיזם הנצחה ארצי שנולד מתוך אהבה גדולה לארץ ולנופלים עליה. המיזם מאחד בני נוער מכל רחבי הארץ, שיוצאים לדרך — אל בתי המשפחות השכולות — כדי להכיר את החללים, להקשיב, ולתעד את סיפוריהם: מי שהם היו, מה אהבו, ואיך חיו.</span>
-        <span class="t-en">"Provision for the Journey" is a national memorial initiative born out of a deep love for the land and for those who fell defending it. It brings together teenagers from across Israel who set out — to the homes of bereaved families — to know the fallen, to listen, and to document their stories: who they were, what they loved, how they lived.</span>
-      </p>
-      <p>
-        <span class="t-he">כל סיפור שנאסף מצטרף לאפליקציית הנצחה <b>חיה</b>, שמחברת בין מקומות, קהילות ודורות — כדי שזכרם של הנופלים ימשיך ללוות אותנו, בכל מקום בארץ.</span>
-        <span class="t-en">Every story we gather joins a <b>living</b> memorial app that connects places, communities and generations — so the memory of the fallen keeps walking with us, everywhere in the land.</span>
-      </p>
-    </div>
-
-    <!-- how it works — a winding journey -->
-    <h3 class="journey-title reveal"><span class="t-he">איך זה עובד</span><span class="t-en">How it works</span></h3>
-    <div class="journey reveal">
-      <svg class="journey-line" viewBox="0 0 80 1000" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M40,10 C12,130 68,250 40,370 C12,490 68,610 40,730 C20,820 60,910 40,990"
-          fill="none" stroke="#9c8d70" stroke-width="9" stroke-linecap="round" stroke-dasharray="0.8 44" filter="url(#wcText)"/>
-      </svg>
-
-      <div class="step reveal d1">
-        <div class="node">🤝</div>
-        <div class="step-text">
-          <h4><span class="t-he">יוצרים קשר</span><span class="t-en">We reach out</span></h4>
-          <p><span class="t-he">בני נוער פונים אל משפחה שכולה ומזמינים אותה לשתף את סיפור יקירהּ.</span><span class="t-en">Teens reach out to a bereaved family and invite them to share their loved one's story.</span></p>
-        </div>
-      </div>
-
-      <div class="step reveal d2">
-        <div class="node">🚗</div>
-        <div class="step-text">
-          <h4><span class="t-he">יוצאים לדרך</span><span class="t-en">We hit the road</span></h4>
-          <p><span class="t-he">נוסעים אל בית המשפחה, לכל פינה בארץ — מהגליל ועד הנגב.</span><span class="t-en">They travel to the family's home, to every corner of the country — from the Galilee to the Negev.</span></p>
-        </div>
-      </div>
-
-      <div class="step reveal d3">
-        <div class="node">🎙️</div>
-        <div class="step-text">
-          <h4><span class="t-he">מתעדים את הסיפור</span><span class="t-en">We record the story</span></h4>
-          <p><span class="t-he">מקשיבים, מצלמים ומתעדים את חייו וסיפורו של החלל, באהבה ובכבוד.</span><span class="t-en">They listen, film and document the soldier's life and story, with love and respect.</span></p>
-        </div>
-      </div>
-
-      <div class="step reveal d4">
-        <div class="node">📱</div>
-        <div class="step-text">
-          <h4><span class="t-he">מצטרף לאפליקציה</span><span class="t-en">It joins the app</span></h4>
-          <p><span class="t-he">הסיפור נכנס לאפליקציית ההנצחה החיה — נגיש לכל אחד, בכל מקום ובכל זמן.</span><span class="t-en">The story enters the living memorial app — open to anyone, anywhere, anytime.</span></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="pillars reveal">
-      <span class="pill"><span class="t-he">הובלה</span><span class="t-en">Leading</span></span>
-      <span class="pill"><span class="t-he">משמעות</span><span class="t-en">Meaning</span></span>
-      <span class="pill"><span class="t-he">זיכרון</span><span class="t-en">Memory</span></span>
-    </div>
-  </div>
-</section>
-
-<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#4d88a4" d="M0,30 C300,70 660,10 1020,36 C1230,52 1360,50 1440,34 L1440,70 L0,70 Z"/></svg>
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#4d88a4" d="M0,40 C360,80 720,0 1080,30 C1260,45 1380,55 1440,40 L1440,70 L0,70 Z"/></svg>
 
 <!-- ============ STORIES ============ -->
 <section class="sec stories on-teal" id="stories">
@@ -643,9 +659,9 @@
       <div class="divider"></div>
     </div>
     <div class="stats">
-      <div class="stat reveal d1"><div class="num" data-count="120">0</div><div class="cap"><span class="t-he">ערים וקהילות</span><span class="t-en">Cities &amp; communities</span></div></div>
-      <div class="stat reveal d2"><div class="num" data-count="300">0</div><div class="cap"><span class="t-he">סיפורים שמחכים להישמע</span><span class="t-en">Stories waiting to be told</span></div></div>
-      <div class="stat reveal d3"><div class="num" data-count="50">0</div><div class="cap"><span class="t-he">מתנדבים יוצאים לדרך</span><span class="t-en">Volunteers on the road</span></div></div>
+      <div class="stat reveal d1"><div class="num" data-count="2000" data-suffix="+">0</div><div class="cap"><span class="t-he">יישובים וערים</span><span class="t-en">Towns &amp; cities</span></div></div>
+      <div class="stat reveal d2"><div class="num" data-count="25644">0</div><div class="cap"><span class="t-he">חללים</span><span class="t-en">Fallen</span></div></div>
+      <div class="stat reveal d3"><div class="num" data-count="300" data-suffix="+">0</div><div class="cap"><span class="t-he">אנדרטאות מסביב לארץ</span><span class="t-en">Memorials around the country</span></div></div>
     </div>
     <p class="stories-lead reveal d2">
       <span class="t-he">מהגליל ועד הנגב — בכל עיר, מושב וקהילה יש סיפור של גבורה. כל פנים על המפה הם משפחה, זיכרון וחיים שלמים.</span>
@@ -654,20 +670,148 @@
   </div>
 </section>
 
-<svg class="wave flip" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#2f6d8b" d="M0,30 C300,70 660,10 1020,36 C1230,52 1360,50 1440,34 L1440,70 L0,70 Z"/></svg>
+</main>
 
-<!-- ============ FORMS ============ -->
-<section class="sec forms-sec" id="forms">
+<!-- ============ PAGE: ABOUT ============ -->
+<main class="page" data-page="about" hidden>
+<section class="sec about page-top">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="lbl"><span class="t-he">הצטרפו אלינו</span><span class="t-en">Join Us</span></span>
+      <span class="lbl"><span class="t-he">עלינו</span><span class="t-en">About Us</span></span>
+      <h2><span class="t-he">מי אנחנו | צידה לדרך</span><span class="t-en">Who We Are | Provision for the Journey</span></h2>
+      <svg class="squiggle" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3,9 C30,2 52,14 78,8 C104,2 128,14 154,8 C172,3 188,9 197,6" fill="none" stroke="url(#ptgrad)" stroke-width="3.5" stroke-linecap="round" filter="url(#wcText)"/></svg>
+    </div>
+
+    <div class="about-story long reveal">
+      <p><span class="t-he">צידה לדרך היא יוזמה של שתי צעירות בתחילת דרכן הצבאית, החולמות להפוך את ההנצחה בישראל למשהו חי, נוכח ומשמעותי בכל פינה בארץ.</span><span class="t-en">Provision for the Journey is an initiative of two young women at the start of their military service, who dream of making remembrance in Israel something alive, present and meaningful in every corner of the country.</span></p>
+      <p><span class="t-he">אנחנו מאמינות שהנצחה אינה מסתכמת בזיכרון של אדם שהיה ואיננו, אלא באפשרות להמשיך את דרכו, להאיר את אורו ולהעניק לחייו משמעות שממשיכה לפעול בעולם. רבים מגיבורי ישראל נפלו צעירים, ולא זכו להקים משפחה או להשאיר אחריהם המשכיות שתמשיך את דרכם. דווקא מתוך כך עולה האחריות שלנו, כעם וכאחים, להיות אלו שימשיכו את סיפורם, את ערכיהם ואת האור שהביאו לעולם.</span><span class="t-en">We believe that remembrance is not only the memory of someone who was and is no longer, but the chance to continue their path, to shine their light, and to give their life a meaning that keeps acting in the world. Many of Israel's heroes fell young, and never had the chance to raise a family or leave behind a continuation of their path. That is exactly where our responsibility comes from — as a people and as brothers and sisters — to be the ones who carry on their story, their values and the light they brought into the world.</span></p>
+      <p><span class="t-he">חז”ל אומרים על יעקב אבינו: “יעקב אבינו לא מת… מה זרעו בחיים אף הוא בחיים”. חיים אמיתיים ונצחיים הם חיים שיש להם המשכיות, חיים שזרעם ממשיך את דרכם ופועל מכוחם. מתוך תפיסה זו צמחה צידה לדרך – הרצון להיות המשך חי לאלו שלא זכו להשאיר אחריהם המשכיות משלהם, ולהעניק לסיפור חייהם מקום ממשי בחיינו.</span><span class="t-en">Our Sages say of Jacob our forefather: “Jacob our father did not die… just as his descendants are alive, so too is he alive.” True, eternal life is life that has continuity — life whose seed carries on its path and acts by its strength. From this idea grew Provision for the Journey: the wish to be a living continuation for those who did not get to leave a continuation of their own, and to give their life story a real place in our lives.</span></p>
+      <p><span class="t-he">כאשר אדם נופל, פעמים רבות נותרת תחושת חוסר אונים מול האובדן, כאילו אין עוד דבר שניתן לעשות מלבד לזכור. אנחנו מאמינות שיש לנו אפשרות נוספת: <b>להפוך את הזיכרון למעשה.</b></span><span class="t-en">When someone falls, we are often left feeling helpless in the face of the loss, as if there is nothing left to do but remember. We believe there is another option: <b>to turn memory into action.</b></span></p>
+      <p><span class="t-he">צידה לדרך היא אפליקציית הנצחה המבקשת לחבר את אזרחי ישראל לגיבורי ישראל, שמסרו את נפשם למען הארץ והחיים בה. דרך סיפורים אישיים, קולותיהם של בני משפחה וחברים והיכרות עם המקומות שבהם חיו, טיילו ואהבו, אנחנו מבקשות להעניק לכל מקום בארץ משמעות עמוקה יותר.</span><span class="t-en">Provision for the Journey is a memorial app that seeks to connect the citizens of Israel with Israel's heroes, who gave their lives for the Land and for life in it. Through personal stories, the voices of family and friends, and getting to know the places where they lived, hiked and loved, we want to give every place in the country a deeper meaning.</span></p>
+      <p><span class="t-he">עיר, תצפית, אנדרטה, מסלול טיול או בית קפה יכולים להפוך למקום שבו סיפור חיים פוגש אותנו מחדש. מקום שבו אנחנו לא רק זוכרים את האדם, אלא מכירים אותו, לומדים ממנו וממשיכים משהו מדרכו.</span><span class="t-en">A city, a lookout, a memorial, a hiking trail or a café can become a place where a life story meets us anew. A place where we don't only remember the person, but get to know them, learn from them and carry on something of their path.</span></p>
+      <p class="about-quote"><b><span class="t-he">אנחנו רוצות ליצור זיכרון שמוביל לחיים ולמעשה. זיכרון שאינו נשאר בעבר, אלא ממשיך ללוות אותנו, לעצב אותנו ולהאיר את הדרך שבה אנחנו בוחרים לחיות.</span><span class="t-en">We want to create memory that leads to life and to action. Memory that doesn't stay in the past, but keeps walking with us, shaping us and lighting the way we choose to live.</span></b></p>
+    </div>
+
+    <h3 class="journey-title reveal"><span class="t-he">איך האפליקציה תיראה</span><span class="t-en">What the app will look like</span></h3>
+    <div class="about-story long reveal">
+      <p><span class="t-he">צידה לדרך תחבר בין סיפורי החיים של הנופלים לבין המקומות שבהם חיו, אהבו ופעלו.</span><span class="t-en">Provision for the Journey will connect the life stories of the fallen with the places where they lived, loved and acted.</span></p>
+      <p><span class="t-he">לכל חייל וחיילת יהיה עמוד אישי באפליקציה, שבמרכזו תוכנית שמע של כחצי שעה. בתוכנית בני משפחה וחברים יספרו על האדם שהכירו ואהבו – מי הוא היה, מה אפיין אותו, אילו ערכים הובילו אותו, מה אהב לעשות ואילו סיפורים מבטאים את מי שהיה.</span><span class="t-en">Every soldier will have a personal page in the app, centered on an audio program of about half an hour. In it, family and friends will tell about the person they knew and loved — who he was, what characterized him, which values guided him, what he loved to do and which stories express who he was.</span></p>
+      <p><span class="t-he">לצד הסיפור האישי, יביאו לנו צידה לדרך – מסרים, ערכים ותובנות שהמאזינים יכולים לקחת אל החיים שלהם ולפעול לאורם. התוכנית תלווה בשירים שהיו אהובים על הנופל או משמעותיים עבורו, ותאפשר למאזינים להכיר אותו באופן אישי, להרגיש קרובים אליו ולגלות כיצד משהו ממנו יכול להמשיך לחיות בתוכם.</span><span class="t-en">Alongside the personal story, they will give us “provision for the journey” — messages, values and insights that listeners can take into their own lives and act by. The program will be accompanied by songs the fallen loved or found meaningful, letting listeners get to know him personally, feel close to him, and discover how something of him can keep living within them.</span></p>
+      <p><span class="t-he">בנוסף באפליקציה ירוכזו המקומות הפיזיים שנוצרו לזכר הנופלים: תצפיות, עגלות קפה, אנדרטאות, מסלולי טיול, מעיינות ועוד.</span><span class="t-en">The app will also gather the physical places created in memory of the fallen: lookouts, coffee carts, memorials, hiking trails, springs and more.</span></p>
+      <p><span class="t-he">כל משתמש יוכל להסתכל באזור שבו הוא נמצא או באזור שאליו הוא מתכנן להגיע, לגלות מקומות בעלי משמעות ולהגיע אליהם.</span><span class="t-en">Every user will be able to look at the area they are in, or the area they plan to visit, discover meaningful places and go to them.</span></p>
+      <p><span class="t-he">בנוסף, במקומות שבהם הנופלים אהבו לטייל, לבלות או שהיו מחוברים אליהם, יופיעו העמודים האישיים שלהם. כך, כשאדם מגיע למסלול טיול או לתצפית, הוא יוכל לגלות מי מהנופלים אהב את המקום, לשמוע את סיפורו ולהפוך את הביקור למפגש עם אדם ועם מורשתו.</span><span class="t-en">In addition, in the places where the fallen loved to hike, spend time or felt connected to, their personal pages will appear. So when someone arrives at a trail or a lookout, they can discover which of the fallen loved that place, hear his story, and turn the visit into an encounter with a person and his legacy.</span></p>
+      <p><span class="t-he">כך הופכת צידה לדרך למפגש בין אדם, סיפור ומקום – ומאפשרת לזיכרון להיות חלק חי ונוכח בדרכים ובחיים שלנו.</span><span class="t-en">This is how Provision for the Journey becomes a meeting of person, story and place — letting memory be a living, present part of our roads and our lives.</span></p>
+    </div>
+
+    <h3 class="journey-title reveal"><span class="t-he">איך זה עובד</span><span class="t-en">How it works</span></h3>
+    <div class="journey reveal">
+      <div class="step reveal d1">
+        <div class="node">🤝</div>
+        <div class="step-text">
+          <h4><span class="t-he">יוצרים קשר</span><span class="t-en">We reach out</span></h4>
+          <p><span class="t-he">בני נוער פונים אל משפחה שכולה ומזמינים אותה לשתף את סיפור יקירהּ.</span><span class="t-en">Teens reach out to a bereaved family and invite them to share their loved one's story.</span></p>
+        </div>
+      </div>
+      <div class="step reveal d2">
+        <div class="node">🚗</div>
+        <div class="step-text">
+          <h4><span class="t-he">יוצאים לדרך</span><span class="t-en">We hit the road</span></h4>
+          <p><span class="t-he">נוסעים אל בית המשפחה, לכל פינה בארץ — מהגליל ועד הנגב.</span><span class="t-en">They travel to the family's home, to every corner of the country — from the Galilee to the Negev.</span></p>
+        </div>
+      </div>
+      <div class="step reveal d3">
+        <div class="node">🎙️</div>
+        <div class="step-text">
+          <h4><span class="t-he">מתעדים את הסיפור</span><span class="t-en">We record the story</span></h4>
+          <p><span class="t-he">מקשיבים, מצלמים ומתעדים את חייו וסיפורו של החלל, באהבה ובכבוד.</span><span class="t-en">They listen, film and document the soldier's life and story, with love and respect.</span></p>
+        </div>
+      </div>
+      <div class="step reveal d4">
+        <div class="node">📱</div>
+        <div class="step-text">
+          <h4><span class="t-he">מצטרף לאפליקציה</span><span class="t-en">It joins the app</span></h4>
+          <p><span class="t-he">הסיפור נכנס לאפליקציית ההנצחה החיה — נגיש לכל אחד, בכל מקום ובכל זמן.</span><span class="t-en">The story enters the living memorial app — open to anyone, anywhere, anytime.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="journey-title reveal"><span class="t-he">למה הקמנו את צידה לדרך?</span><span class="t-en">Why we founded Provision for the Journey</span></h3>
+    <div class="about-story long reveal">
+      <p><span class="t-he">הרעיון של צידה לדרך נולד מתוך מפגש עם האבסורד שבנסיעה ברחבי הארץ, במקומות שבהם נפלו גיבורים, מבלי להכיר את האנשים שבזכותם אנחנו כאן. המעבר בין יישובים, כבישים ונקודות בעוטף עזה, שבהם התרחשו סיפורי גבורה ואובדן, עורר בנו את השאלה: איך יכול להיות שאנחנו נמצאות כל כך קרוב לסיפורים האלה, ובכל זאת כל כך רחוקות מהם?</span><span class="t-en">The idea for Provision for the Journey was born from facing the absurdity of driving across the country, through places where heroes fell, without knowing the people thanks to whom we are here. Passing through towns, roads and spots in the Gaza envelope, where stories of heroism and loss took place, raised a question in us: how can it be that we are so close to these stories, and yet so far from them?</span></p>
+      <p><span class="t-he">מתוך כך עלתה המחשבה שאולי דווקא בדרך אל היעד נוכל לפגוש את האנשים שחיו, אהבו ופעלו במקום שאליו אנחנו נוסעות, ולהפוך את הנסיעה עצמה למפגש עם סיפור חיים.</span><span class="t-en">From that came the thought that perhaps, precisely on the way to our destination, we could meet the people who lived, loved and acted in the place we are traveling to — and turn the drive itself into an encounter with a life story.</span></p>
+      <p><span class="t-he">שתינו, ברוך השם, לא חווינו אובדן של אדם קרוב, אבל הרגשנו היטב את הכאב הלאומי. בכל פעם שאדם נפל, הלב שלנו נשבר. עם הזמן הרגשנו שהכאב הזה פשוט נמצא שם, כחלק מהמציאות שלנו, ושאנחנו רוצות למצוא דרך אחרת להיות מחוברות אליו.</span><span class="t-en">Thank God, neither of us has lost someone close, but we felt the national pain deeply. Every time someone fell, our hearts broke. Over time we felt that this pain was simply there, as part of our reality, and that we wanted to find a different way to be connected to it.</span></p>
+      <p><span class="t-he">מה שעזר לנו להחיות את הכאב ולהפוך אותו למשהו חי ומשמעותי היה דווקא ההיכרות עם האנשים עצמם. לשמוע את הסיפורים שלהם, להכיר את האישיות שלהם, את הבחירות שעשו, את הערכים שהובילו אותם ואת הדרך שבה חיו. מתוך ההיכרות הזאת הצלחנו להרגיש קרובות לאנשים שמעולם לא הכרנו, ולגלות כיצד אפשר לקחת משהו מהם אל החיים שלנו.</span><span class="t-en">What helped us bring the pain to life and turn it into something living and meaningful was getting to know the people themselves. Hearing their stories, knowing their personalities, the choices they made, the values that guided them and the way they lived. Through that, we came to feel close to people we never met, and discovered how we can take something of them into our own lives.</span></p>
+      <p><span class="t-he">לפעמים סיפור על חייל או חיילת, על מעשה קטן או על תכונה מיוחדת, תופס אותנו ומשאיר בנו משהו. כשאנחנו פוגשות בהמשך החיים סיטואציה שבה אנחנו יכולות לבחור להתנהל באותה הדרך, אנחנו נזכרות באדם שממנו למדנו. כך, בכל פעם שאנחנו פועלות מכוח משהו שקיבלנו ממנו, אנחנו מרגישות שהאור שלו ממשיך להתקיים בעולם.</span><span class="t-en">Sometimes a story about a soldier — a small deed or a special trait — catches us and leaves something in us. When we later meet a situation where we can choose to act the same way, we remember the person we learned it from. So every time we act out of something we received from them, we feel their light keeps existing in the world.</span></p>
+      <p><span class="t-he">מתוך המקום הזה הבנו שאנחנו לא רוצות רק לזכור את הנופלים, אלא להמשיך אותם בחיים שלנו.</span><span class="t-en">From that place we understood that we don't only want to remember the fallen — we want to continue them in our lives.</span></p>
+      <p><span class="t-he">רצינו ליצור דרך שבה הזיכרון יהיה חלק טבעי מהחיים, ולא רק משהו שפוגשים ביום הזיכרון או כשעומדים מול אנדרטה. חשבנו דווקא על הנסיעות ברחבי הארץ – על הדרך אל היעד, שבה אפשר להכיר את האדם שחי, אהב ופעל במקום שאליו אנחנו נוסעים. כך הנסיעה הופכת גם למפגש עם סיפור חיים, עם מורשת ועם משמעות.</span><span class="t-en">We wanted to create a way for memory to be a natural part of life, not just something we meet on Memorial Day or when standing before a monument. We thought about traveling around the country — about the way to the destination, where you can get to know the person who lived, loved and acted in the place you're heading to. That way the drive also becomes an encounter with a life story, a legacy and meaning.</span></p>
+      <p><span class="t-he">רצינו שגם המקומות עצמם יקבלו עומק נוסף. עגלת קפה, תצפית, מסלול טיול או אנדרטה יכולים להפוך למקום שבו אנחנו לא רק נהנים מהנוף, אלא גם מכירים אדם שהמקום הזה היה חלק מחייו. אם נגיע למסלול שאדם שנפל אהב לטייל בו, נוכל לשמוע עליו, להכיר משהו מעולמו ולתת לסיפור שלו להדהד גם בטיול שלנו.</span><span class="t-en">We wanted the places themselves to gain more depth too. A coffee cart, a lookout, a trail or a memorial can become a place where we don't only enjoy the view, but also get to know a person this place was part of. If we reach a trail that a fallen soldier loved to hike, we can hear about him, know something of his world, and let his story echo through our own hike.</span></p>
+      <p><span class="t-he">מתוך כל התחושות, המחשבות והמפגשים האלה נולדה צידה לדרך.</span><span class="t-en">Out of all these feelings, thoughts and encounters, Provision for the Journey was born.</span></p>
+      <p><span class="t-he">אנחנו רוצות להפוך את ההנצחה לחיה ונושמת בחיים של כל אחד מאיתנו. ליצור זיכרון שלא נשאר רק בעבר, אלא ממשיך ללוות אותנו בדרכים, במקומות, בבחירות ובמעשים שלנו.</span><span class="t-en">We want to make remembrance alive and breathing in the life of each one of us. To create memory that doesn't stay only in the past, but keeps accompanying us on our roads, in our places, our choices and our deeds.</span></p>
+      <p class="about-quote"><b><span class="t-he">כי מבחינתנו, הדרך המשמעותית ביותר לזכור אדם היא לאפשר למשהו ממנו להמשיך לחיות בתוכנו.</span><span class="t-en">Because for us, the most meaningful way to remember a person is to let something of them keep living within us.</span></b></p>
+    </div>
+
+    <div class="pillars reveal">
+      <span class="pill"><span class="t-he">הנצחה</span><span class="t-en">Remembrance</span></span>
+      <span class="pill"><span class="t-he">חיבור</span><span class="t-en">Connection</span></span>
+      <span class="pill"><span class="t-he">משמעות</span><span class="t-en">Meaning</span></span>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ PAGE: VOLUNTEERS ============ -->
+<main class="page" data-page="volunteers" hidden>
+<section class="sec forms-sec page-top">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="lbl"><span class="t-he">מתנדבים</span><span class="t-en">Volunteers</span></span>
       <h2><span class="t-he">הצטרפו אלינו לדרך</span><span class="t-en">Join Us on the Journey</span></h2>
       <div class="divider"></div>
-      <p><span class="t-he">רוצים לקחת חלק במיזם משמעותי? מלאו את הטופס המתאים ונחזור אליכם.</span><span class="t-en">Want to be part of something meaningful? Fill in the form that fits you and we'll be in touch.</span></p>
+      <p><span class="t-he">בני נוער שרוצים לצאת לדרך — הצטרפו לאחת הקבוצות ברחבי הארץ, או השאירו פרטים ונחזור אליכם.</span><span class="t-en">Teens ready to hit the road — join one of the groups around the country, or leave your details and we'll get back to you.</span></p>
     </div>
-    <div class="forms-grid">
 
-      <form class="form-card volunteer reveal d1" onsubmit="return handleSubmit(event,'vol')">
+    <h3 class="journey-title reveal"><span class="t-he">ראשי הקבוצות</span><span class="t-en">Group Leaders</span></h3>
+    <div class="leaders">
+      <div class="leader reveal d1">
+        <div class="avatar">נ</div>
+        <div class="lname"><span class="t-he">נועה כהן</span><span class="t-en">Noa Cohen</span></div>
+        <div class="lcity">📍 <span class="t-he">ירושלים</span><span class="t-en">Jerusalem</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%A6%D7%98%D7%A8%D7%A3%20%D7%9C%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%A9%D7%9C%20%D7%A0%D7%95%D7%A2%D7%94%20%D7%9B%D7%94%D7%9F%20%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">להצטרפות לקבוצה</span><span class="t-en">Join this group</span></a>
+      </div>
+      <div class="leader reveal d2">
+        <div class="avatar">א</div>
+        <div class="lname"><span class="t-he">איתי לוי</span><span class="t-en">Itai Levi</span></div>
+        <div class="lcity">📍 <span class="t-he">חיפה</span><span class="t-en">Haifa</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%A6%D7%98%D7%A8%D7%A3%20%D7%9C%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%A9%D7%9C%20%D7%90%D7%99%D7%AA%D7%99%20%D7%9C%D7%95%D7%99%20%D7%91%D7%97%D7%99%D7%A4%D7%94%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">להצטרפות לקבוצה</span><span class="t-en">Join this group</span></a>
+      </div>
+      <div class="leader reveal d3">
+        <div class="avatar">ש</div>
+        <div class="lname"><span class="t-he">שירה מזרחי</span><span class="t-en">Shira Mizrahi</span></div>
+        <div class="lcity">📍 <span class="t-he">באר שבע</span><span class="t-en">Be'er Sheva</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%A6%D7%98%D7%A8%D7%A3%20%D7%9C%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%A9%D7%9C%20%D7%A9%D7%99%D7%A8%D7%94%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20%D7%91%D7%91%D7%90%D7%A8%20%D7%A9%D7%91%D7%A2%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">להצטרפות לקבוצה</span><span class="t-en">Join this group</span></a>
+      </div>
+      <div class="leader reveal d4">
+        <div class="avatar">י</div>
+        <div class="lname"><span class="t-he">יונתן פרץ</span><span class="t-en">Yonatan Peretz</span></div>
+        <div class="lcity">📍 <span class="t-he">תל אביב</span><span class="t-en">Tel Aviv</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%A6%D7%98%D7%A8%D7%A3%20%D7%9C%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%A9%D7%9C%20%D7%99%D7%95%D7%A0%D7%AA%D7%9F%20%D7%A4%D7%A8%D7%A5%20%D7%91%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">להצטרפות לקבוצה</span><span class="t-en">Join this group</span></a>
+      </div>
+      <div class="leader reveal d1">
+        <div class="avatar">ה</div>
+        <div class="lname"><span class="t-he">הדס אברהם</span><span class="t-en">Hadas Avraham</span></div>
+        <div class="lcity">📍 <span class="t-he">גוש עציון</span><span class="t-en">Gush Etzion</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%A6%D7%98%D7%A8%D7%A3%20%D7%9C%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%A9%D7%9C%20%D7%94%D7%93%D7%A1%20%D7%90%D7%91%D7%A8%D7%94%D7%9D%20%D7%91%D7%92%D7%95%D7%A9%20%D7%A2%D7%A6%D7%99%D7%95%D7%9F%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">להצטרפות לקבוצה</span><span class="t-en">Join this group</span></a>
+      </div>
+      <div class="leader reveal d2">
+        <div class="avatar">א</div>
+        <div class="lname"><span class="t-he">אורי בן דוד</span><span class="t-en">Ori Ben David</span></div>
+        <div class="lcity">📍 <span class="t-he">קריית שמונה</span><span class="t-en">Kiryat Shmona</span></div>
+        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%A6%D7%98%D7%A8%D7%A3%20%D7%9C%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%A9%D7%9C%20%D7%90%D7%95%D7%A8%D7%99%20%D7%91%D7%9F%20%D7%93%D7%95%D7%93%20%D7%91%D7%A7%D7%A8%D7%99%D7%99%D7%AA%20%D7%A9%D7%9E%D7%95%D7%A0%D7%94%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">להצטרפות לקבוצה</span><span class="t-en">Join this group</span></a>
+      </div>
+    </div>
+
+    <div class="forms-grid single">
+      <form class="form-card volunteer reveal" onsubmit="return handleSubmit(event,'vol')">
         <div class="ico">🤝</div>
         <h3><span class="t-he">אני רוצה להתנדב</span><span class="t-en">I want to volunteer</span></h3>
         <div class="h3-sub"><span class="t-he">בני נוער שרוצים לצאת לדרך</span><span class="t-en">For teens ready to hit the road</span></div>
@@ -676,83 +820,60 @@
         <div class="field"><label><span class="t-he">עיר מגורים</span><span class="t-en">City</span></label><input name="city" type="text" required data-ph-he="עיר" data-ph-en="City"></div>
         <div class="field"><label><span class="t-he">טלפון</span><span class="t-en">Phone</span></label><input name="phone" type="tel" required data-ph-he="050-000-0000" data-ph-en="050-000-0000"></div>
         <button class="submit-btn" type="submit"><span class="t-he">שליחת הטופס</span><span class="t-en">Send</span></button>
-        <div class="wa-row">
-          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-            תמר 058-680-9301
-          </a>
-          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-            בילא 058-725-1442
-          </a>
-        </div>
         <div class="form-note"><span class="t-he">בלחיצה על שליחה תועברו לוואטסאפ עם פרטיכם ✦</span><span class="t-en">Sending opens WhatsApp with your details ✦</span></div>
       </form>
+    </div>
 
-      <form class="form-card family reveal d2" onsubmit="return handleSubmit(event,'fam')">
-        <div class="ico">🕯️</div>
-        <h3><span class="t-he">אני משפחה שרוצה לשתף</span><span class="t-en">I'm a family who wants to share</span></h3>
-        <div class="h3-sub"><span class="t-he">משפחות חללי צה״ל</span><span class="t-en">Families of the fallen</span></div>
-        <div class="field"><label><span class="t-he">שם מלא</span><span class="t-en">Full name</span></label><input name="name" type="text" required data-ph-he="השם שלך" data-ph-en="Your name"></div>
-        <div class="field"><label><span class="t-he">שם החלל ז״ל</span><span class="t-en">Fallen soldier's name</span></label><input name="soldier" type="text" required data-ph-he="שם החלל" data-ph-en="Soldier's name"></div>
-        <div class="field"><label><span class="t-he">עיר מגורים</span><span class="t-en">City</span></label><input name="city" type="text" required data-ph-he="עיר" data-ph-en="City"></div>
-        <div class="field"><label><span class="t-he">טלפון</span><span class="t-en">Phone</span></label><input name="phone" type="tel" required data-ph-he="050-000-0000" data-ph-en="050-000-0000"></div>
-        <button class="submit-btn" type="submit"><span class="t-he">שליחת הטופס</span><span class="t-en">Send</span></button>
-        <div class="wa-row">
-          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-            תמר 058-680-9301
-          </a>
-          <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-            בילא 058-725-1442
-          </a>
-        </div>
-        <div class="form-note"><span class="t-he">בלחיצה על שליחה תועברו לוואטסאפ עם פרטיכם ✦</span><span class="t-en">Sending opens WhatsApp with your details ✦</span></div>
-      </form>
-
+    <div class="lead-cta reveal">
+      <h3><span class="t-he">רוצים גם להיות ראש קבוצה?</span><span class="t-en">Want to be a group leader too?</span></h3>
+      <p><span class="t-he">צרו איתנו קשר לפרטים נוספים</span><span class="t-en">Contact us for more information</span></p>
+      <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/972586809301?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%99%D7%95%D7%AA%20%D7%A8%D7%90%D7%A9%20%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%D7%91%D7%A6%D7%99%D7%93%D7%94%20%D7%9C%D7%93%D7%A8%D7%9A"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">דברו איתנו בוואטסאפ</span><span class="t-en">Message us on WhatsApp</span></a>
     </div>
   </div>
 </section>
+</main>
 
-<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#3f7c98" d="M0,40 C360,80 720,0 1080,30 C1260,45 1380,55 1440,40 L1440,70 L0,70 Z"/></svg>
-
-<!-- ============ FOUNDERS ============ -->
-<section class="sec founders" id="founders">
-  <div class="wrap reveal">
-    <div class="sec-head" style="margin-bottom:36px">
-      <span class="lbl" style="color:var(--sand-light)"><span class="t-he">מאחורי המיזם</span><span class="t-en">Behind the Initiative</span></span>
-      <h2 style="color:#fff"><span class="t-he">יוזמות הפרויקט: תמר ובילא</span><span class="t-en">Founders: Tamar &amp; Bila</span></h2>
+<!-- ============ PAGE: FAMILIES ============ -->
+<main class="page" data-page="families" hidden>
+<section class="sec forms-sec page-top">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="lbl"><span class="t-he">משפחות</span><span class="t-en">Families</span></span>
+      <h2><span class="t-he">רוצים לקבוע ראיון עם נוער בארץ</span><span class="t-en">Book an interview with teens</span></h2>
       <div class="divider"></div>
+      <p><span class="t-he">משפחות יקרות, נשמח להגיע אליכם, להכיר את יקירכם ולתעד את סיפורו. מלאו את הפרטים ונחזור אליכם בהקדם.</span><span class="t-en">Dear families, we would be honored to come to you, get to know your loved one and record their story. Fill in your details and we'll be in touch soon.</span></p>
     </div>
-    <div class="founder-cards">
-      <div class="founder reveal d1">
-        <div class="avatar">ת</div>
-        <div class="fname"><span class="t-he">תמר</span><span class="t-en">Tamar</span></div>
-        <div class="role"><span class="t-he">יוזמת הפרויקט</span><span class="t-en">Project founder</span></div>
-        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-          058-680-9301
-        </a>
-      </div>
-      <div class="founder reveal d2">
-        <div class="avatar">ב</div>
-        <div class="fname"><span class="t-he">בילא</span><span class="t-en">Bila</span></div>
-        <div class="role"><span class="t-he">יוזמת הפרויקט</span><span class="t-en">Project founder</span></div>
-        <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-          058-725-1442
-        </a>
-      </div>
+    <div class="family-form reveal">
+      <iframe title="טופס משפחות — צידה לדרך" src="https://form.jotform.com/263075656647064" loading="lazy" allow="geolocation; microphone; camera"></iframe>
+      <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://form.jotform.com/263075656647064"><span class="t-he">פתיחת הטופס בחלון חדש</span><span class="t-en">Open the form in a new window</span></a>
     </div>
   </div>
 </section>
+</main>
+
+<!-- ============ PAGE: CONTACT ============ -->
+<main class="page" data-page="contact" hidden>
+<section class="sec forms-sec page-top">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="lbl"><span class="t-he">יצירת קשר</span><span class="t-en">Contact</span></span>
+      <h2><span class="t-he">דברו איתנו</span><span class="t-en">Talk to Us</span></h2>
+      <div class="divider"></div>
+      <p><span class="t-he">נשמח לשמוע מכם בוואטסאפ</span><span class="t-en">We'd love to hear from you on WhatsApp</span></p>
+    </div>
+    <div class="contact-row reveal">
+      <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972586809301"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">תמר</span><span class="t-en">Tamar</span> · 058-680-9301</a>
+      <a class="wa-btn" target="_blank" rel="noopener" href="https://wa.me/972587251442"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg><span class="t-he">בילא</span><span class="t-en">Bila</span> · 058-725-1442</a>
+    </div>
+  </div>
+</section>
+</main>
 
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="fmark"></div>
   <div class="fname heb">צידה לדרך</div>
-  <div class="fen">Provision for the Journey — Bringing the Victory Home</div>
+  <div class="fen">Provision for the Journey — <span class="t-he">נוסעים לאורם</span><span class="t-en">Traveling by Their Light</span></div>
   <div class="fcontacts">
     <a target="_blank" rel="noopener" href="https://wa.me/972586809301">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488a11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.025zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
@@ -763,7 +884,7 @@
       בילא · 058-725-1442
     </a>
   </div>
-  <div class="copy"><span class="t-he">צידה לדרך — הובלה · משמעות · זיכרון · © 2026 · נבנה באהבה לזכר חללי צה״ל</span><span class="t-en">Provision for the Journey — Leading · Meaning · Memory · © 2026 · Built with love in memory of the fallen</span></div>
+  <div class="copy"><span class="t-he">צידה לדרך — הנצחה · חיבור · משמעות · © 2026 · נבנה באהבה לזכר חללי צה״ל</span><span class="t-en">Provision for the Journey — Remembrance · Connection · Meaning · © 2026 · Built with love in memory of the fallen</span></div>
 </footer>
 
 <script>
@@ -834,13 +955,35 @@
     entries.forEach(e=>{
       if(!e.isIntersecting) return;
       const el = e.target, target = +el.dataset.count;
-      if(reduce){ el.textContent = target + '+'; numIO.unobserve(el); return; }
+      const fmt = v => v.toLocaleString('en-US') + (el.dataset.suffix || '');
+      if(reduce){ el.textContent = fmt(target); numIO.unobserve(el); return; }
       let n = 0; const step = Math.max(1, Math.round(target/45));
-      const t = setInterval(()=>{ n += step; if(n>=target){ n=target; clearInterval(t);} el.textContent = n + '+'; }, 28);
+      const t = setInterval(()=>{ n += step; if(n>=target){ n=target; clearInterval(t);} el.textContent = fmt(n); }, 28);
       numIO.unobserve(el);
     });
   },{threshold:.5});
   nums.forEach(n=>numIO.observe(n));
+
+
+  /* ---------- Pages + brand menu ---------- */
+  const pages = document.querySelectorAll('.page');
+  const brandBtn = document.getElementById('brandBtn');
+  const siteMenu = document.getElementById('siteMenu');
+  function setMenu(open){ siteMenu.classList.toggle('open', open); brandBtn.setAttribute('aria-expanded', open); }
+  brandBtn.addEventListener('click', e=>{ e.stopPropagation(); setMenu(!siteMenu.classList.contains('open')); });
+  document.addEventListener('click', e=>{ if(!siteMenu.contains(e.target)) setMenu(false); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') setMenu(false); });
+  function showPage(){
+    let name = location.hash.slice(1);
+    if(!document.querySelector('.page[data-page="'+name+'"]')) name = 'home';
+    pages.forEach(p=> p.hidden = p.dataset.page !== name);
+    siteMenu.querySelectorAll('a').forEach(a=> a.classList.toggle('active', a.dataset.go === name));
+    setMenu(false);
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', showPage);
+  window.addEventListener('scroll', ()=> setMenu(false), {passive:true});
+  showPage();
 
   /* ---------- Language toggle ---------- */
   const html = document.documentElement;
